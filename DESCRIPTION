@@ -6,9 +6,9 @@ License: GPL-3
 URL: https://github.com/Secretariat-CompNet/mditools
 BugReports: https://github.com/Secretariat-CompNet/mditools/issues
 Authors@R: c(
-    person("Eric", "Bartelsman", role = "aut"),
     person("Daniele", "Aglio", role = "aut"),
-    person("Mirja", "Halbig", role = "aut"),
+    person("Eric", "Bartelsman", role = "aut"),
+    person("Mirja", "Hälbig", role = "aut"),
     person("Marco", "Miorandi", role = "aut"),
     person("Johanna", "Weiss", role = c("aut", "cre"), email = "johanna.weiss@iwhesl.onmicrosoft.com"),
     person("Alessandro", "Zona Mattioli", role = "aut"),
