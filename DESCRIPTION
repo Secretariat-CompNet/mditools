@@ -1,0 +1,48 @@
+Package: mditools
+Type: Package
+Title: Microdata Infrastructure Tools for Firm-Level Microdata Research
+Version: 0.1.0
+License: GPL-3
+URL: https://github.com/Secretariat-CompNet/mditools
+BugReports: https://github.com/Secretariat-CompNet/mditools/issues
+Authors@R: c(
+    person("Eric", "Bartelsman", role = "aut"),
+    person("Daniele", "Aglio", role = "aut"),
+    person("Mirja", "Halbig", role = "aut"),
+    person("Marco", "Miorandi", role = "aut"),
+    person("Johanna", "Weiss", role = c("aut", "cre"), email = "johanna.weiss@iwhesl.onmicrosoft.com"),
+    person("Alessandro", "Zona Mattioli", role = "aut"),
+    person("Julián", "Díaz-Acosta", role = "ctb"),
+    person("Alberto", "Ferreira", role = "ctb"),
+    person("Javier", "Miranda", role = "ctb"),
+    person("Marcelo Piemonte", "Ribeiro", role = "ctb"),
+    person("Reetuparna", "Vishwanath", role = "ctb"),
+    person("Chengzi", "Yi", role = "ctb")
+  )
+Description: Supports the full analysis pipeline for researchers working with
+    firm-level microdata. Provides data tools for panel preparation (import,
+    outlier detection, classification harmonization), analytical methods
+    (production function estimation, capital stock measurement, markups,
+    intensity measures, distributions, regression, clustering), and disclosure
+    tools for tagging outputs with dominance and observation counts before
+    aggregation and publication.
+Encoding: UTF-8
+Imports:
+  data.table,
+  fixest,
+  haven,
+  readxl,
+  Matrix,
+  cluster,
+  dbscan,
+  mclust,
+  stats,
+  utils,
+  graphics,
+  grDevices
+Suggests:
+  testthat (>= 3.0.0),
+  arrow
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
+RoxygenNote: 8.0.0
