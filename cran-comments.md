@@ -1,22 +1,37 @@
 ## Package summary
 
-`mditools` provides analysis and aggregation tools for statistical agencies
-(NSIs) and users at research data centers. It includes methods for production
-function estimation (ACF, LP, OLS, WDRG, CS, DPGMM), capital stock measurement
-(PIM), disclosure control, data import across multiple file formats, industry
-classification harmonization, and firm-level clustering. The package is designed
-for use in microdata research infrastructure projects such as the Microdata
-Infrastructure (MDI) initiative.
+`mditools` supports the full analysis pipeline for researchers working with
+firm-level microdata. It includes data tools for panel preparation (import,
+outlier detection, classification harmonization), analytical methods (production
+function estimation via ACF, LP, OLS, WDRG, CS, and DPGMM; capital stock
+measurement via PIM; markups, intensity measures, distributions, regression,
+and clustering), and disclosure tools for tagging aggregated outputs with
+dominance and observation counts before publication.
 
 ## Check environments
 
-- macOS Sequoia 15.7 (x86_64), R 4.6.0 — local
-- Windows (R-devel), via `devtools::check_win_devel()` — *to be added*
-- Ubuntu (R-release), via R-hub — *to be added*
+- macOS Sequoia 15.7 (x86_64), R 4.6.0 — 0 errors | 0 warnings | 0 notes
+- Windows (R-devel, 2026-06-15 r90156), via `devtools::check_win_devel()` — 0 errors | 0 warnings | 1 note
+- Windows (R-release 4.5.3), via `devtools::check_win_release()` — 0 errors | 0 warnings | 1 note
+- Windows (R-oldrel 4.5.3), via `devtools::check_win_oldrelease()` — 0 errors | 0 warnings | 1 note
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+## Notes
+
+The single NOTE on Windows contains three items:
+
+1. **"Possibly misspelled words: Microdata, microdata"** — these are intentional domain
+   terms (microdata = firm-level record data), not spelling errors.
+
+2. **"Possibly invalid URLs (404)"** — the GitHub repository
+   `https://github.com/Secretariat-CompNet/mditools` was private at check time.
+   It has been made public prior to submission and the URLs now resolve correctly.
+
+3. **"Possibly invalid file URI: LICENSE"** — a relative `LICENSE` link in README.md
+   that does not resolve outside the repository context. Removed before submission.
 
 ## Notes on suggested packages
 
