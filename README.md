@@ -103,4 +103,4 @@ The disclosure-specific parameters and their roles are:
 
 ## License
 
-GPL-3. See [LICENSE](LICENSE) for details.
+GPL-3.
