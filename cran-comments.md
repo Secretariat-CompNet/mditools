@@ -21,17 +21,8 @@ dominance and observation counts before publication.
 
 ## Notes
 
-The single NOTE on Windows contains three items:
-
-1. **"Possibly misspelled words: Microdata, microdata"** — these are intentional domain
-   terms (microdata = firm-level record data), not spelling errors.
-
-2. **"Possibly invalid URLs (404)"** — the GitHub repository
-   `https://github.com/Secretariat-CompNet/mditools` was private at check time.
-   It has been made public prior to submission and the URLs now resolve correctly.
-
-3. **"Possibly invalid file URI: LICENSE"** — a relative `LICENSE` link in README.md
-   that does not resolve outside the repository context. Removed before submission.
+**"Possibly misspelled words: Microdata, microdata"** — these are intentional domain
+terms (microdata = firm-level record data), not spelling errors.
 
 ## Notes on suggested packages
 
