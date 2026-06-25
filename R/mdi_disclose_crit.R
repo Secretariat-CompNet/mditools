@@ -15,9 +15,10 @@
 #' `disclosure = TRUE`, but can also be used standalone.
 #'
 #' @param DT A `data.table` containing the aggregated dataset.
-#' @param domVar Character. Variable used for the dominance criterion:
-#'   `"emp"` (employment), `"nq"` (sales), or `"var"` (all variables in
-#'   `var_list`). Default `"var"`.
+#' @param domVar Character. Variable used for the dominance criterion.
+#'   Use `"var"` (default) to compute dominance for all variables in
+#'   `var_list`, or supply the name of a single numeric column already
+#'   present in `DT` (e.g. `"emp"`, `"nq"`).
 #' @param domNr Numeric. Number of top firms to consider in the dominance
 #'   criterion (e.g. top 1, 2, or 3). Default `2`.
 #' @param bygroups Character vector of grouping variables, as in
@@ -36,11 +37,6 @@
 #'   `count_firms = TRUE`. Default `"firmid"`.
 #' @param ent_col Character. Column name used to count unique enterprises when
 #'   `count_firms = TRUE`. Default `"entid"`.
-#' @param dirTMPSAVE Character. Path to temporary save directory, used when
-#'   `domVar` is `"emp"` or `"nq"` and the variable is not in `DT`. Only
-#'   needed in a full NSI runtime environment. Default `NULL`.
-#' @param NSI_MD_conc A `data.table` of MD concordance metadata. If `NULL`
-#'   and needed, it is loaded from `dirMDMETA`. Default `NULL`.
 #'
 #' @return A `data.table` with the same grouping structure as the input, plus:
 #'   - One or more `domPerc_*` columns: dominance share per group.
@@ -48,8 +44,8 @@
 #'   - `NumFirms` and `NumEnt` (only when `count_firms = TRUE`).
 #'
 #' @details
-#' - For `domVar = "emp"` or `domVar = "nq"`, only one dominance column
-#'   (`domPerc`) is returned. The `dom_formula` argument is ignored for these.
+#' - For `domVar != "var"`, the named column must already be present in `DT`.
+#'   One dominance column (`domPerc`) is returned and `dom_formula` is ignored.
 #' - For `domVar = "var"`, separate dominance columns are created for each
 #'   variable in `var_list` (`domPerc_<var>`), using the formula specified
 #'   by `dom_formula`.
@@ -75,11 +71,9 @@
 #'             bygroups = c("nace", "year"), var_list = "emp",
 #'             dom_formula = "residual", count_firms = TRUE)
 #'
-#' \dontrun{
-#' # domVar = "emp" or "nq" requires NSI runtime files (BR/SBS on disk)
-#' mdi_disclose_crit(DT, domVar = "emp", domNr = 2L, bygroups = c("nace", "year"),
-#'             dirTMPSAVE = "/data/tmp/")
-#' }
+#' # Single-column dominance (column must be present in DT)
+#' mdi_disclose_crit(DT, domVar = "emp", domNr = 2L,
+#'             bygroups = c("nace", "year"))
 #'
 #' @export
 
@@ -92,45 +86,19 @@ mdi_disclose_crit <-
            dom_formula  = c("top_share", "residual"),
            count_firms  = FALSE,
            firm_col     = "firmid",
-           ent_col      = "entid",
-           dirTMPSAVE = NULL,
-           NSI_MD_conc = NULL) {
+           ent_col      = "entid") {
 
     dom_formula <- match.arg(dom_formula)
     check_string(domVar, "domVar")
     check_char_vec(bygroups, "bygroups")
     check_dt(DT)
-    if (!domVar %in% c("emp", "nq", "var") && !domVar %in% names(DT))
-      stop("'domVar' must be \"emp\", \"nq\", \"var\", or a column name in DT")
+    if (domVar != "var" && !domVar %in% names(DT))
+      stop("'domVar' must be \"var\" or a column present in DT. Column '",
+           domVar, "' not found in DT.")
     if (count_firms) {
       check_dt(DT, firm_col)
       check_dt(DT, ent_col)
     }
-
-    if (!domVar %in% colnames(DT) & domVar != 'var') {
-      if (domVar == 'emp' | domVar == 'persons_br') {
-        if (is.null(NSI_MD_conc))
-          stop("'NSI_MD_conc' must be supplied when domVar = \"emp\" and emp is not in DT")
-        if ('persons_br' %in% NSI_MD_conc$MD_varname) {
-          if (is.null(dirTMPSAVE))
-            stop("'dirTMPSAVE' must be supplied to load BR data")
-          BR <- readRDS(file = paste0(dirTMPSAVE, "BR", ".RDS"))
-          BR_dims <- attr(BR, 'sorted')
-          DT <- merge(BR[, c(BR_dims, 'persons_br'), with = FALSE], DT, by = c(BR_dims), all.y = TRUE)
-        } else {
-          if (is.null(dirTMPSAVE))
-            stop("'dirTMPSAVE' must be supplied to load SBS data")
-          SBS <- readRDS(file = paste0(dirTMPSAVE, "SBS", ".RDS"))
-          SBS_dims <- attr(SBS, 'sorted')
-          DT <- merge(SBS[, c(SBS_dims, 'emp'), with = FALSE], DT, by = c(SBS_dims), all.y = TRUE)
-        }
-      } else if (domVar == 'nq') {
-        if (is.null(dirTMPSAVE))
-          stop("'dirTMPSAVE' must be supplied to load SBS data")
-        SBS <- readRDS(file = paste0(dirTMPSAVE, "SBS", ".RDS"))
-        SBS_dims <- attr(SBS, 'sorted')
-        DT <- merge(SBS[, c(SBS_dims, 'nq'), with = FALSE], DT, by = c(SBS_dims), all.y = TRUE)
-      }}
     
     # Loop the calculation of the dominance criterion if domVar == 'var'
     if (domVar == 'var') {
@@ -161,7 +129,6 @@ mdi_disclose_crit <-
       }, by = bygroups, .SDcols = numeric_var_list]
       
       # Calculate number of observations per subgroup
-      # DF: Calculate number of enterprises and Firms for disclosure in Germany
 
       if (count_firms) {
         DTde <- DT[, list(NumFirms = data.table::uniqueN(.SD[[firm_col]], na.rm = TRUE),

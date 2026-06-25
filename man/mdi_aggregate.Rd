@@ -13,6 +13,7 @@ mdi_aggregate(
   mrg = FALSE,
   disclosure = TRUE,
   count_firms = FALSE,
+  dom_formula = c("top_share", "residual"),
   minNumObs = 5L
 )
 }
@@ -42,6 +43,10 @@ disclosure control. Default is `TRUE`.}
 \item{count_firms}{Logical. If `TRUE`, adds a column `NumFirms` containing
 the number of unique firms in the input dataset. A firm identifier column
 (`plantid`, `firmid`, `entid`, or `entgrp`) must be present. Default is `FALSE`.}
+
+\item{dom_formula}{Character. Dominance formula passed to [`mdi_disclose_crit()`]
+when `disclosure = TRUE`. `"top_share"` (default) computes the share of the
+top `domNr` firms; `"residual"` computes \eqn{(Total - x_1 - x_2) / x_1}.}
 
 \item{minNumObs}{Integer. Minimum number of observations used for the
 quantile smoothing window in `"q10"`, `"q25"`, `"median"`, `"q75"`, `"q90"`

@@ -25,6 +25,9 @@
 #' @param mrg Logical. If `TRUE`, aggregated statistics are merged back into the
 #'   original dataset as new variables. If `FALSE`, a new aggregated `data.table`
 #'   is returned. Default is `FALSE`.
+#' @param dom_formula Character. Dominance formula passed to [`mdi_disclose_crit()`]
+#'   when `disclosure = TRUE`. `"top_share"` (default) computes the share of the
+#'   top `domNr` firms; `"residual"` computes \eqn{(Total - x_1 - x_2) / x_1}.
 #' @param count_firms Logical. If `TRUE`, adds a column `NumFirms` containing
 #'   the number of unique firms in the input dataset. A firm identifier column
 #'   (`plantid`, `firmid`, `entid`, or `entgrp`) must be present. Default is `FALSE`.
@@ -75,8 +78,10 @@ mdi_aggregate <-
            mrg = FALSE,
            disclosure = TRUE,
            count_firms = FALSE,
+           dom_formula = c("top_share", "residual"),
            minNumObs = 5L) {
 
+    dom_formula <- match.arg(dom_formula)
     check_dt(DT)
     check_char_vec(bygroups, "bygroups")
     check_char_vec(agg_type, "agg_type")
@@ -279,7 +284,8 @@ mdi_aggregate <-
 
       # Apply disclosure checks
       if (disclosure == TRUE) {
-        DTdisc <- mdi_disclose_crit(DTout, bygroups = bygroups, var_list = var_list)
+        DTdisc <- mdi_disclose_crit(DTout, bygroups = bygroups, var_list = var_list,
+                                    dom_formula = dom_formula, count_firms = count_firms)
         DTagg <- merge(DTagg, DTdisc, by = bygroups)
       }
 

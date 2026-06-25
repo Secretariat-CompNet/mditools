@@ -13,17 +13,16 @@ mdi_disclose_crit(
   dom_formula = c("top_share", "residual"),
   count_firms = FALSE,
   firm_col = "firmid",
-  ent_col = "entid",
-  dirTMPSAVE = NULL,
-  NSI_MD_conc = NULL
+  ent_col = "entid"
 )
 }
 \arguments{
 \item{DT}{A `data.table` containing the aggregated dataset.}
 
-\item{domVar}{Character. Variable used for the dominance criterion:
-`"emp"` (employment), `"nq"` (sales), or `"var"` (all variables in
-`var_list`). Default `"var"`.}
+\item{domVar}{Character. Variable used for the dominance criterion.
+Use `"var"` (default) to compute dominance for all variables in
+`var_list`, or supply the name of a single numeric column already
+present in `DT` (e.g. `"emp"`, `"nq"`).}
 
 \item{domNr}{Numeric. Number of top firms to consider in the dominance
 criterion (e.g. top 1, 2, or 3). Default `2`.}
@@ -49,13 +48,6 @@ and `NumEnt`, using `firm_col` and `ent_col`. Default `FALSE`.}
 
 \item{ent_col}{Character. Column name used to count unique enterprises when
 `count_firms = TRUE`. Default `"entid"`.}
-
-\item{dirTMPSAVE}{Character. Path to temporary save directory, used when
-`domVar` is `"emp"` or `"nq"` and the variable is not in `DT`. Only
-needed in a full NSI runtime environment. Default `NULL`.}
-
-\item{NSI_MD_conc}{A `data.table` of MD concordance metadata. If `NULL`
-and needed, it is loaded from `dirMDMETA`. Default `NULL`.}
 }
 \value{
 A `data.table` with the same grouping structure as the input, plus:
@@ -78,8 +70,8 @@ This function is normally called internally by [`mdi_aggregate()`] when
 `disclosure = TRUE`, but can also be used standalone.
 }
 \details{
-- For `domVar = "emp"` or `domVar = "nq"`, only one dominance column
-  (`domPerc`) is returned. The `dom_formula` argument is ignored for these.
+- For `domVar != "var"`, the named column must already be present in `DT`.
+  One dominance column (`domPerc`) is returned and `dom_formula` is ignored.
 - For `domVar = "var"`, separate dominance columns are created for each
   variable in `var_list` (`domPerc_<var>`), using the formula specified
   by `dom_formula`.
@@ -105,10 +97,8 @@ mdi_disclose_crit(DT, domVar = "var", domNr = 2L,
             bygroups = c("nace", "year"), var_list = "emp",
             dom_formula = "residual", count_firms = TRUE)
 
-\dontrun{
-# domVar = "emp" or "nq" requires NSI runtime files (BR/SBS on disk)
-mdi_disclose_crit(DT, domVar = "emp", domNr = 2L, bygroups = c("nace", "year"),
-            dirTMPSAVE = "/data/tmp/")
-}
+# Single-column dominance (column must be present in DT)
+mdi_disclose_crit(DT, domVar = "emp", domNr = 2L,
+            bygroups = c("nace", "year"))
 
 }

@@ -83,11 +83,11 @@ test_that("error on invalid domVar", {
   )
 })
 
-test_that("error when domVar='emp' not in DT and NSI_MD_conc not supplied", {
+test_that("error when domVar column is not present in DT", {
   DT <- make_disclos_dt()[, emp := NULL]
   expect_error(
     mdi_disclose_crit(DT, domVar = "emp", domNr = 2L, bygroups = "nace"),
-    "'NSI_MD_conc' must be supplied"
+    "'domVar' must be"
   )
 })
 
