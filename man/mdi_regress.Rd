@@ -138,16 +138,16 @@ mdi_regress(DT, formula = "y ~ x1 + x2", minNumObs = 5L)
 mdi_regress(DT, formula = "y ~ x1 + x2", minNumObs = 5L,
             count_firms = TRUE)
 
-\dontrun{
-# Weighted GLM with clustered SEs
-mdi_regress(DT, formula = "y ~ x1 + x2", model = "feglm",
-            family = binomial, weights = ~w,
+\donttest{
+# Weighted regression with clustered SEs
+DT[, w := runif(.N)]
+mdi_regress(DT, formula = "y ~ x1 + x2", weights = ~w,
             cluster = TRUE, vcov = "~firmid")
 
-# With LaTeX export
+# With LaTeX export (writes .tex file to tempdir)
 mdi_regress(DT, formula = "y ~ x1", tex = TRUE,
             output_name = "reg1", desc_file = "log",
-            dirOUTPUT = "/output/NL/")
+            dirOUTPUT = paste0(tempdir(), "/"))
 }
 
 }

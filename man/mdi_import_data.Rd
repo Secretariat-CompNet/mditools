@@ -52,10 +52,9 @@ However, note that for some file formats (e.g., Stata, SAS, SPSS), the function 
 In such cases, the specified columns are converted to character types **after** the data has been loaded.
 }
 \examples{
-\dontrun{
-mdi_import_data("path/to/dir/", "data.csv", "csv", char_columns = "id")
-mdi_import_data("path/to/dir/", "data.dta", "dta",
-            col_list = c("id", "emp"), char_columns = "id")
-}
+tmp_dir <- paste0(tempdir(), "/")
+write.csv(data.frame(id = 1:3, emp = c(10, 20, 30)),
+          paste0(tmp_dir, "data.csv"), row.names = FALSE)
+mdi_import_data(tmp_dir, "data.csv", "csv", char_columns = "id")
 
 }
