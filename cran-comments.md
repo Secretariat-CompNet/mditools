@@ -1,3 +1,21 @@
+## Resubmission
+
+This is a resubmission addressing the three issues raised by the CRAN reviewer:
+
+1. **`\dontrun` in examples replaced**: `mdi_import_data()` and `mdi_regress()`
+   now use runnable examples with `tempdir()` instead of fake paths wrapped in
+   `\dontrun{}`.
+
+2. **No file writing to user home**: `mdi_regress()` example now writes to
+   `paste0(tempdir(), "/")` instead of a hard-coded output path.
+
+3. **`mdi_disclose_crit()` refactored**: The function no longer reads from a
+   hard-coded RDS file on disk (`dirTMPSAVE`/`NSI_MD_conc` parameters removed).
+   The dominance variable must now be passed directly as a column in `DT`, which
+   is more general and does not assume any file system layout.
+
+---
+
 ## Package summary
 
 `mditools` supports the full analysis pipeline for researchers working with

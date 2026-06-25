@@ -6,7 +6,7 @@
 \alias{mditools-package}
 \title{mditools: Microdata Infrastructure Tools for Firm-Level Microdata Research}
 \description{
-Supports the full analysis pipeline for researchers working with firm-level microdata. Provides data tools for panel preparation (import, outlier detection, classification harmonization), analytical methods (production function estimation, capital stock measurement, markups, intensity measures, distributions, regression, clustering), and disclosure tools for tagging outputs with dominance and observation counts before aggregation and publication.
+Supports the full analysis pipeline for researchers working with firm-level microdata. Provides data tools for panel preparation (import, outlier detection, classification harmonization), analytical methods (production function estimation, capital stock measurement, markups, intensity measures, distributions, regression, clustering), and disclosure tools for tagging outputs with dominance and observation counts before aggregation and publication. Production function estimation implements methods by Ackerberg, Caves and Frazer (2015) \doi{10.3982/ECTA13408}, Levinsohn and Petrin (2003) \doi{10.1111/1467-937X.00246}, Wooldridge (2009) \doi{10.1016/j.econlet.2009.04.026}, Petrin, Poi and Levinsohn (2004) \doi{10.1177/1536867X0400400202}, and Arellano and Bond (1991) \doi{10.2307/2297968} with the "too many instruments" correction by Roodman (2009) \doi{10.1111/j.1468-0084.2008.00542.x}. Markup estimation follows De Loecker and Warzynski (2012) \doi{10.1257/aer.102.6.2437}. Cost-share production function estimation follows Basu and Fernald (1997) \doi{10.1086/262073}.
 }
 \seealso{
 Useful links:
@@ -22,16 +22,15 @@ Useful links:
 Authors:
 \itemize{
   \item Johanna Weiss \email{johanna.weiss@iwhesl.onmicrosoft.com}
-  \item Eric Bartelsman
   \item Daniele Aglio
-  \item Mirja Halbig
+  \item Eric Bartelsman
+  \item Mirja H<U+00E4>lbig
   \item Marco Miorandi
   \item Alessandro Zona Mattioli
 }
 
 Other contributors:
 \itemize{
-  \item Jing Chen [contributor]
   \item Juli<U+00E1>n D<U+00ED>az-Acosta [contributor]
   \item Alberto Ferreira [contributor]
   \item Javier Miranda [contributor]
