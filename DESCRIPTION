@@ -35,7 +35,8 @@ Description: Supports the full analysis pipeline for researchers working with
     Roodman (2009) <doi:10.1111/j.1468-0084.2008.00542.x>. Markup estimation
     follows De Loecker and Warzynski (2012) <doi:10.1257/aer.102.6.2437>.
     Cost-share production function estimation follows Basu and Fernald (1997)
-    <doi:10.1086/262073>.
+    <doi:10.1086/262073>. Capital stock estimation via the Perpetual Inventory
+    Method follows OECD (2009) <doi:10.1787/9789264068476-en>.
 Encoding: UTF-8
 Imports:
   data.table,
