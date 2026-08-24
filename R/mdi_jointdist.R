@@ -28,6 +28,13 @@
 #'   table. Default `FALSE`.
 #' @param disclosure Logical. Whether to apply disclosure control. Default
 #'   `TRUE`.
+#' @param minNumObs Integer. Minimum number of observations for the quantile
+#'   smoothing window in `mdi_aggregate`. Set to `MDIminNumObs` in module code.
+#'   Default `5L`.
+#' @param domVar Character. Dominance variable passed to `mdi_aggregate`.
+#'   Set to `MDIdomVar` in module code. Default `"var"`.
+#' @param domNr Integer. Number of top firms for dominance check passed to
+#'   `mdi_aggregate`. Set to `MDIdomNr` in module code. Default `2L`.
 #'
 #' @return A `data.table` with computed joint distributions including the
 #'   distributional moments for specified variables aggregated by the given
@@ -53,7 +60,8 @@
 mdi_jointdist <- function(DT, hhfile, qnames, var_names,
                           moment = c("decile", "quintile", "quartile"),
                           bygroups, hier, agg_type, prefix = agg_type,
-                          weight_col = NULL, mrg = FALSE, disclosure = TRUE) {
+                          weight_col = NULL, mrg = FALSE, disclosure = TRUE,
+                          minNumObs = 5L, domVar = "var", domNr = 2L) {
 
   check_dt(DT)
   check_dt(hhfile, required_cols = "h_0", arg_name = "hhfile")
@@ -95,9 +103,12 @@ mdi_jointdist <- function(DT, hhfile, qnames, var_names,
         var_list   = var_names,
         bygroups   = c(dim_i, qcol),
         agg_type   = agg_type,
-        weight_col     = weight_col,
+        weight_col = weight_col,
         mrg        = mrg,
-        disclosure = disclosure
+        disclosure = disclosure,
+        minNumObs  = minNumObs,
+        domVar     = domVar,
+        domNr      = domNr
       )
 
       tmp2[, ("qname") := qname]

@@ -24,7 +24,7 @@ mdi_outlier(
 
 \item{both_tails}{Logical indicating whether to apply the routine to both tails of the distribution. If `TRUE`, the operation affects both the upper and lower tails; otherwise, it affects only the upper tail. Default `FALSE`.}
 
-\item{group}{An optional character string naming a grouping variable in `DT`. When supplied, the outlier routine is applied within each group. Default `NULL`.}
+\item{group}{An optional character vector naming one or more grouping variables in `DT`. When supplied, the outlier routine is applied within each group. Default `NULL`.}
 }
 \value{
 A modified copy of `DT` with the outlier routine applied to the specified variables. If `routine = "flag"`, new columns named `flag_<var>` are added (value `1` for flagged observations, `NA` otherwise).

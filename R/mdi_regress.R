@@ -187,7 +187,7 @@ mdi_regress <-
     if (length(regs) != 0) {
       regDT <- data.table::rbindlist(lapply(regs, function(r) {
         coef_table <- summary(r, vcov = vcov)$coeftable
-        ci <- tryCatch(confint(r), error = function(e) NULL)
+        ci <- tryCatch(confint(r, vcov = vcov), error = function(e) NULL)
         dt <- data.table::as.data.table(coef_table, keep.rownames = "coef")
 
         .coef_names <- dt[["coef"]]

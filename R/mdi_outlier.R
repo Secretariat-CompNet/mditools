@@ -8,7 +8,7 @@
 #' @param routine A string specifying the outlier routine to apply: `"trim"`, `"winsorize"`, or `"flag"`. Default `"trim"`.
 #' @param fraction The fraction of data to be trimmed or winsorized; must be a numeric value between 0 and 1.
 #' @param both_tails Logical indicating whether to apply the routine to both tails of the distribution. If `TRUE`, the operation affects both the upper and lower tails; otherwise, it affects only the upper tail. Default `FALSE`.
-#' @param group An optional character string naming a grouping variable in `DT`. When supplied, the outlier routine is applied within each group. Default `NULL`.
+#' @param group An optional character vector naming one or more grouping variables in `DT`. When supplied, the outlier routine is applied within each group. Default `NULL`.
 #' @return A modified copy of `DT` with the outlier routine applied to the specified variables. If `routine = "flag"`, new columns named `flag_<var>` are added (value `1` for flagged observations, `NA` otherwise).
 #' @examples
 #' library(data.table)
@@ -27,7 +27,7 @@ mdi_outlier <- function(DT, var_list, routine = c("trim", "winsorize", "flag"),
   routine <- match.arg(routine)
   if (length(fraction) != 1 || !is.numeric(fraction) || fraction < 0 || fraction > 1)
     stop("'fraction' must be a single numeric value between 0 and 1")
-  if (!is.null(group)) check_string(group, "group")
+  if (!is.null(group)) check_char_vec(group, "group")
 
   dbout = data.table::copy(DT)
 

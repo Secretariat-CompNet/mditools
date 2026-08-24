@@ -14,6 +14,8 @@ mdi_aggregate(
   disclosure = TRUE,
   count_firms = FALSE,
   dom_formula = c("top_share", "residual"),
+  domVar = "var",
+  domNr = 2L,
   minNumObs = 5L
 )
 }
@@ -47,6 +49,15 @@ the number of unique firms in the input dataset. A firm identifier column
 \item{dom_formula}{Character. Dominance formula passed to [`mdi_disclose_crit()`]
 when `disclosure = TRUE`. `"top_share"` (default) computes the share of the
 top `domNr` firms; `"residual"` computes \eqn{(Total - x_1 - x_2) / x_1}.}
+
+\item{domVar}{Character. Name of the dominance variable passed to
+[`mdi_disclose_crit()`]. Use `"var"` (default) to compute dominance per
+output variable, or supply a column name (e.g. `"emp"`) to use a fixed
+dominance variable. Set to `MDIdomVar` in module code.}
+
+\item{domNr}{Integer. Number of top firms used in the dominance check,
+passed to [`mdi_disclose_crit()`]. Default is `2`; set to `MDIdomNr` in
+module code.}
 
 \item{minNumObs}{Integer. Minimum number of observations used for the
 quantile smoothing window in `"q10"`, `"q25"`, `"median"`, `"q75"`, `"q90"`

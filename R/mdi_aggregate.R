@@ -28,6 +28,13 @@
 #' @param dom_formula Character. Dominance formula passed to [`mdi_disclose_crit()`]
 #'   when `disclosure = TRUE`. `"top_share"` (default) computes the share of the
 #'   top `domNr` firms; `"residual"` computes \eqn{(Total - x_1 - x_2) / x_1}.
+#' @param domVar Character. Name of the dominance variable passed to
+#'   [`mdi_disclose_crit()`]. Use `"var"` (default) to compute dominance per
+#'   output variable, or supply a column name (e.g. `"emp"`) to use a fixed
+#'   dominance variable. Set to `MDIdomVar` in module code.
+#' @param domNr Integer. Number of top firms used in the dominance check,
+#'   passed to [`mdi_disclose_crit()`]. Default is `2`; set to `MDIdomNr` in
+#'   module code.
 #' @param count_firms Logical. If `TRUE`, adds a column `NumFirms` containing
 #'   the number of unique firms in the input dataset. A firm identifier column
 #'   (`plantid`, `firmid`, `entid`, or `entgrp`) must be present. Default is `FALSE`.
@@ -79,6 +86,8 @@ mdi_aggregate <-
            disclosure = TRUE,
            count_firms = FALSE,
            dom_formula = c("top_share", "residual"),
+           domVar = "var",
+           domNr = 2L,
            minNumObs = 5L) {
 
     dom_formula <- match.arg(dom_formula)
@@ -285,6 +294,7 @@ mdi_aggregate <-
       # Apply disclosure checks
       if (disclosure == TRUE) {
         DTdisc <- mdi_disclose_crit(DTout, bygroups = bygroups, var_list = var_list,
+                                    domVar = domVar, domNr = domNr,
                                     dom_formula = dom_formula, count_firms = count_firms)
         DTagg <- merge(DTagg, DTdisc, by = bygroups)
       }

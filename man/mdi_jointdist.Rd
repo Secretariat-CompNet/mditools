@@ -16,7 +16,10 @@ mdi_jointdist(
   prefix = agg_type,
   weight_col = NULL,
   mrg = FALSE,
-  disclosure = TRUE
+  disclosure = TRUE,
+  minNumObs = 5L,
+  domVar = "var",
+  domNr = 2L
 )
 }
 \arguments{
@@ -53,6 +56,16 @@ table. Default `FALSE`.}
 
 \item{disclosure}{Logical. Whether to apply disclosure control. Default
 `TRUE`.}
+
+\item{minNumObs}{Integer. Minimum number of observations for the quantile
+smoothing window in `mdi_aggregate`. Set to `MDIminNumObs` in module code.
+Default `5L`.}
+
+\item{domVar}{Character. Dominance variable passed to `mdi_aggregate`.
+Set to `MDIdomVar` in module code. Default `"var"`.}
+
+\item{domNr}{Integer. Number of top firms for dominance check passed to
+`mdi_aggregate`. Set to `MDIdomNr` in module code. Default `2L`.}
 }
 \value{
 A `data.table` with computed joint distributions including the
