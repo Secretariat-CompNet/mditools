@@ -66,7 +66,7 @@ test_that("error when var_list column not in DT", {
   expect_error(mdi_outlier(DT, "nonexistent", "trim", 0.1), "columns not found")
 })
 
-test_that("error when group is not a string", {
+test_that("error when group is not a character vector", {
   DT <- make_outlier_dt()
-  expect_error(mdi_outlier(DT, "x", "trim", 0.1, group = 123L), "must be a non-empty character string")
+  expect_error(mdi_outlier(DT, "x", "trim", 0.1, group = 123L), "must be a non-empty character vector")
 })
