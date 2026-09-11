@@ -66,7 +66,7 @@ mdi_hier_apply <- function(DT, hhfile, var_list, bygroups, hier, agg_type = "sum
     hlist <- c(hier)
   } else if (hier=="ALL") {
     h0 <- "h_0"
-    hlist <- sort(names(hhfile))
+    hlist <- hier_levels(hhfile)
   }
 
   #bring in the information of parental nodes from hhfile, i.e. merge DT with hhfile by bygroups.1
