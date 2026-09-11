@@ -10,13 +10,17 @@ mdi_import_data(
   format,
   col_list = NULL,
   char_columns = NULL,
-  encoding = NULL
+  encoding = NULL,
+  oracle_channel = NULL,
+  db_user = NULL
 )
 }
 \arguments{
-\item{dir}{The directory path where the input file is located.}
+\item{dir}{For file-based formats: the directory path where the input file is located.
+For `format = "oracle"`: the DSN name of the Oracle data source (configured at the OS level).}
 
-\item{file}{The name of the file to be imported.}
+\item{file}{For file-based formats: the name of the file to be imported.
+For `format = "oracle"`: the name of the Oracle table to query.}
 
 \item{format}{The type of the file to be imported. Supported types include:
 - `'csv'` for comma-delimited files (direct import as character supported),
@@ -28,10 +32,12 @@ mdi_import_data(
 - `'sav'` for SPSS files (post-import conversion to character),
 - `'parquet'` for Apache Parquet files (requires the `arrow` package),
 - `'rdata'` for R workspace files (first object loaded),
-- `'rds'` for R serialized single-object files.}
+- `'rds'` for R serialized single-object files.
+- `'oracle'` for tables in an Oracle relational database, queried via `RODBC::sqlQuery` (post-import conversion to character).}
 
 \item{col_list}{A character vector of column names to import. If `NULL`
-(default), all columns are imported.}
+(default), all columns are imported. For `format = "oracle"`, this
+becomes the SELECT list of the query.}
 
 \item{char_columns}{A character vector of column names to treat as
 character type. For `csv` and `txt`, conversion happens during import;
@@ -39,7 +45,18 @@ for all other formats it happens after loading. Default `NULL`.}
 
 \item{encoding}{Character string passed to the underlying reader (e.g.
 `"UTF-8"`, `"Latin-1"`). If `NULL` or empty, a format-specific default
-is used. Default `NULL`.}
+is used. Ignored for `format = "oracle"`. Default `NULL`.}
+
+\item{oracle_channel}{Optional pre-opened RODBC connection (from
+`RODBC::odbcConnect`). When supplied, the function reuses it instead of
+opening a new connection — useful when importing several Oracle tables
+in the same session to avoid repeated password prompts. Ignored for
+non-Oracle formats. Default `NULL`.}
+
+\item{db_user}{Oracle database user account. Required when
+`format = "oracle"` and `oracle_channel` is not supplied. The password
+is requested interactively at runtime via `askpass::askpass` and never
+stored. Default `NULL`.}
 }
 \value{
 A `data.table` containing the imported data.
@@ -47,8 +64,9 @@ A `data.table` containing the imported data.
 \description{
 Reads data from various file formats into an R `data.table`. This function is a wrapper around multiple file-reading packages
 such as `fread` (from `data.table`), `haven` (for Stata, SAS, SPSS), and `readxl` (for Excel). It supports CSV, Stata (.dta), Excel (.xlsx),
-SAS (.sas7bdat), SPSS (.sav), and tab-delimited text files (.txt). You can also specify a list of columns to import and specify which columns should be imported as characters.
-However, note that for some file formats (e.g., Stata, SAS, SPSS), the function cannot directly import columns as characters during the import process.
+SAS (.sas7bdat), SPSS (.sav), tab-delimited text files (.txt), and tables in an **Oracle** relational database via `RODBC`.
+You can also specify a list of columns to import and specify which columns should be imported as characters.
+However, note that for some file formats (e.g., Stata, SAS, SPSS, Oracle), the function cannot directly import columns as characters during the import process.
 In such cases, the specified columns are converted to character types **after** the data has been loaded.
 }
 \examples{
