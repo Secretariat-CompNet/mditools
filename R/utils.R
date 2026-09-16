@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @export
 check_choice <- function(x, arg_name, choices) {
   if (!x %in% choices)
     stop(paste0("'", arg_name, "' must be one of: ",
@@ -6,18 +7,21 @@ check_choice <- function(x, arg_name, choices) {
 }
 
 #' @keywords internal
+#' @export
 check_string <- function(x, arg_name) {
   if (!is.character(x) || length(x) != 1L || nchar(x) == 0L)
     stop(paste0("'", arg_name, "' must be a non-empty character string."))
 }
 
 #' @keywords internal
+#' @export
 check_char_vec <- function(x, arg_name) {
   if (!is.character(x) || length(x) == 0L)
     stop(paste0("'", arg_name, "' must be a non-empty character vector."))
 }
 
 #' @keywords internal
+#' @export
 check_dt <- function(DT, required_cols = character(0), arg_name = "DT") {
   if (!data.table::is.data.table(DT))
     stop(paste0("'", arg_name, "' must be a data.table"))
