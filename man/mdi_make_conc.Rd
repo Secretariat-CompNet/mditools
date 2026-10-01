@@ -4,39 +4,45 @@
 \alias{mdi_make_conc}
 \title{Harmonize a Classification Over Time}
 \usage{
-mdi_make_conc(conc_table, year_list, code_name)
+mdi_make_conc(conc_table, year_list = NULL, code_name)
 }
 \arguments{
-\item{conc_table}{A `data.table` of concordance mappings with at least
-three columns: `year` (integer transition year), `left` (code at `t-1`),
-and a second code column (code at `t`). Rows must cover all transitions
-within `year_list`.}
+\item{conc_table}{A \code{data.table} of concordance mappings with at least
+three columns: \code{year} (integer transition year), \code{left} (code at \code{t-1}),
+and a second code column (code at \code{t}). Rows must cover all transitions
+within \code{year_list}.}
 
 \item{year_list}{Integer or numeric vector of years of interest, starting
-from the first year `t` in the first concordance table (not `t-1`).}
+from the first year \code{t} in the first concordance table (not \code{t-1}).
+\code{NULL} (the default) uses every year in \code{conc_table}. Narrow it to the
+years your data covers: extra years before the data join codes that
+changed before it starts, and extra years after it decide the naming and
+the \code{"D"}.}
 
 \item{code_name}{Character. Name of the classification variable, used to
-label output columns (e.g. `"pcc8"` produces columns `pcc8` and
-`pcc8_harmonized`).}
+label output columns (e.g. \code{"pcc8"} produces columns \code{pcc8} and
+\code{pcc8_harmonized}).}
 }
 \value{
-A `data.table` in long format with columns:
-  \itemize{
-    \item `year` — the year of the observation.
-    \item `<code_name>` — the original code for that year.
-    \item `<code_name>_harmonized` — the harmonized code mapped to the
-      most recent non-missing code in the group.
-  }
+A \code{data.table} in long format with columns:
+\itemize{
+\item \code{year} — the year of the observation.
+\item \verb{<code_name>} — the original code for that year.
+\item \verb{<code_name>_harmonized} — the group's code: its smallest code
+in the latest year the group still has one, with \code{"D"} appended if
+that year is before the last year.
+}
 }
 \description{
 Creates a harmonized concordance for a classification of interest over a
 time period, starting from year-by-year concordance tables. Each row in
-`conc_table` maps a code in year `t-1` (column `left`) to a code in year
-`t` (second column), along with a `year` column indicating which transition
+\code{conc_table} maps a code in year \code{t-1} (column \code{left}) to a code in year
+\code{t} (second column), along with a \code{year} column indicating which transition
 the row belongs to.
 
-The function handles 1:1, m:1, 1:m, and m:m code changes, and appends
-`"D"` to harmonized codes that disappear before the last year.
+Codes linked by the concordance, directly or through other codes and
+years, form one group, so 1:1, m:1, 1:m and m:m changes are all handled
+alike. Every code in a group gets the same harmonized code.
 }
 \examples{
 library(data.table)
