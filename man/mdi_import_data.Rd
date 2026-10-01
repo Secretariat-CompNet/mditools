@@ -17,57 +17,59 @@ mdi_import_data(
 }
 \arguments{
 \item{dir}{For file-based formats: the directory path where the input file is located.
-For `format = "oracle"`: the DSN name of the Oracle data source (configured at the OS level).}
+For \code{format = "oracle"}: the DSN name of the Oracle data source (configured at the OS level).}
 
 \item{file}{For file-based formats: the name of the file to be imported.
-For `format = "oracle"`: the name of the Oracle table to query.}
+For \code{format = "oracle"}: the name of the Oracle table to query.}
 
 \item{format}{The type of the file to be imported. Supported types include:
-- `'csv'` for comma-delimited files (direct import as character supported),
-- `'txt'` for tab-delimited text files (direct import as character supported),
-- `'gz'` for gzip-compressed delimited files,
-- `'dta'` for Stata files (post-import conversion to character),
-- `'xlsx'` for Excel files (post-import conversion to character),
-- `'sas7bdat'` for SAS files (post-import conversion to character),
-- `'sav'` for SPSS files (post-import conversion to character),
-- `'parquet'` for Apache Parquet files (requires the `arrow` package),
-- `'rdata'` for R workspace files (first object loaded),
-- `'rds'` for R serialized single-object files.
-- `'oracle'` for tables in an Oracle relational database, queried via `RODBC::sqlQuery` (post-import conversion to character).}
+\itemize{
+\item \code{'csv'} for comma-delimited files (direct import as character supported),
+\item \code{'txt'} for tab-delimited text files (direct import as character supported),
+\item \code{'gz'} for gzip-compressed delimited files,
+\item \code{'dta'} for Stata files (post-import conversion to character),
+\item \code{'xlsx'} for Excel files (post-import conversion to character),
+\item \code{'sas7bdat'} for SAS files (post-import conversion to character),
+\item \code{'sav'} for SPSS files (post-import conversion to character),
+\item \code{'parquet'} for Apache Parquet files (requires the \code{arrow} package),
+\item \code{'rdata'} for R workspace files (first object loaded),
+\item \code{'rds'} for R serialized single-object files.
+\item \code{'oracle'} for tables in an Oracle relational database, queried via \code{RODBC::sqlQuery} (post-import conversion to character).
+}}
 
-\item{col_list}{A character vector of column names to import. If `NULL`
-(default), all columns are imported. For `format = "oracle"`, this
+\item{col_list}{A character vector of column names to import. If \code{NULL}
+(default), all columns are imported. For \code{format = "oracle"}, this
 becomes the SELECT list of the query.}
 
 \item{char_columns}{A character vector of column names to treat as
-character type. For `csv` and `txt`, conversion happens during import;
-for all other formats it happens after loading. Default `NULL`.}
+character type. For \code{csv} and \code{txt}, conversion happens during import;
+for all other formats it happens after loading. Default \code{NULL}.}
 
 \item{encoding}{Character string passed to the underlying reader (e.g.
-`"UTF-8"`, `"Latin-1"`). If `NULL` or empty, a format-specific default
-is used. Ignored for `format = "oracle"`. Default `NULL`.}
+\code{"UTF-8"}, \code{"Latin-1"}). If \code{NULL} or empty, a format-specific default
+is used. Ignored for \code{format = "oracle"}. Default \code{NULL}.}
 
 \item{oracle_channel}{Optional pre-opened RODBC connection (from
-`RODBC::odbcConnect`). When supplied, the function reuses it instead of
+\code{RODBC::odbcConnect}). When supplied, the function reuses it instead of
 opening a new connection — useful when importing several Oracle tables
 in the same session to avoid repeated password prompts. Ignored for
-non-Oracle formats. Default `NULL`.}
+non-Oracle formats. Default \code{NULL}.}
 
 \item{db_user}{Oracle database user account. Required when
-`format = "oracle"` and `oracle_channel` is not supplied. The password
-is requested interactively at runtime via `askpass::askpass` and never
-stored. Default `NULL`.}
+\code{format = "oracle"} and \code{oracle_channel} is not supplied. The password
+is requested interactively at runtime via \code{askpass::askpass} and never
+stored. Default \code{NULL}.}
 }
 \value{
-A `data.table` containing the imported data.
+A \code{data.table} containing the imported data.
 }
 \description{
-Reads data from various file formats into an R `data.table`. This function is a wrapper around multiple file-reading packages
-such as `fread` (from `data.table`), `haven` (for Stata, SAS, SPSS), and `readxl` (for Excel). It supports CSV, Stata (.dta), Excel (.xlsx),
-SAS (.sas7bdat), SPSS (.sav), tab-delimited text files (.txt), and tables in an **Oracle** relational database via `RODBC`.
+Reads data from various file formats into an R \code{data.table}. This function is a wrapper around multiple file-reading packages
+such as \code{fread} (from \code{data.table}), \code{haven} (for Stata, SAS, SPSS), and \code{readxl} (for Excel). It supports CSV, Stata (.dta), Excel (.xlsx),
+SAS (.sas7bdat), SPSS (.sav), tab-delimited text files (.txt), and tables in an \strong{Oracle} relational database via \code{RODBC}.
 You can also specify a list of columns to import and specify which columns should be imported as characters.
 However, note that for some file formats (e.g., Stata, SAS, SPSS, Oracle), the function cannot directly import columns as characters during the import process.
-In such cases, the specified columns are converted to character types **after** the data has been loaded.
+In such cases, the specified columns are converted to character types \strong{after} the data has been loaded.
 }
 \examples{
 tmp_dir <- paste0(tempdir(), "/")

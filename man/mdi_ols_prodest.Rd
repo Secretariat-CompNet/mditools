@@ -42,12 +42,14 @@ the period mean (via \code{mdi_aggregate}). Default \code{TRUE}.}
 }
 \value{
 A \code{data.table} with one row per observation in the estimation
-  sample, containing:
-- \code{id}, \code{time} columns (using the names supplied)
-- \code{tfp}: total factor productivity (OLS residual)
-- \code{el_<endog>}, \code{el_<exog>}: estimated input elasticities
-- \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE}): period-demeaned TFP
-- \code{NumObs}: number of observations used
+sample, containing:
+\itemize{
+\item \code{id}, \code{time} columns (using the names supplied)
+\item \code{tfp}: total factor productivity (OLS residual)
+\item \code{el_<endog>}, \code{el_<exog>}: estimated input elasticities
+\item \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE}): period-demeaned TFP
+\item \code{NumObs}: number of observations used
+}
 }
 \description{
 Fits a Cobb-Douglas production function by OLS on the free and state inputs

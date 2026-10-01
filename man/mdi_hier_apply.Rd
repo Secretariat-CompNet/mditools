@@ -17,45 +17,45 @@ mdi_hier_apply(
 )
 }
 \arguments{
-\item{DT}{A `data.table` to be aggregated. Must contain all columns in
-`var_list` and `bygroups`.}
+\item{DT}{A \code{data.table} to be aggregated. Must contain all columns in
+\code{var_list} and \code{bygroups}.}
 
-\item{hhfile}{A `data.table` containing the hierarchy; must include a
-column `h_0` matching `bygroups[1]` in `DT`, plus one column per
-aggregation level (e.g. `h_1`, `h_2`).}
+\item{hhfile}{A \code{data.table} containing the hierarchy; must include a
+column \code{h_0} matching \code{bygroups[1]} in \code{DT}, plus one column per
+aggregation level (e.g. \code{h_1}, \code{h_2}).}
 
-\item{var_list}{A character vector of numeric variable names in `DT` to
+\item{var_list}{A character vector of numeric variable names in \code{DT} to
 aggregate.}
 
-\item{bygroups}{A character vector of grouping variables in `DT`. The first
-element must match `h_0` in `hhfile`.}
+\item{bygroups}{A character vector of grouping variables in \code{DT}. The first
+element must match \code{h_0} in \code{hhfile}.}
 
-\item{hier}{Character. Either a single node name (e.g. `"h_2"`) to
-aggregate `h_0` up to that level, or `"ALL"` to aggregate to every
-available node in `hhfile`.}
+\item{hier}{Character. Either a single node name (e.g. \code{"h_2"}) to
+aggregate \code{h_0} up to that level, or \code{"ALL"} to aggregate to every
+available node in \code{hhfile}.}
 
 \item{agg_type}{Character vector of aggregation types passed to
-[`mdi_aggregate()`]. Default `"sum"`.}
+\code{\link[=mdi_aggregate]{mdi_aggregate()}}. Default \code{"sum"}.}
 
 \item{weight_col}{Optional character string naming a weight column in
-`DT`. Passed as `weight_col` to [`mdi_aggregate()`]. Default `NULL`.}
+\code{DT}. Passed as \code{weight_col} to \code{\link[=mdi_aggregate]{mdi_aggregate()}}. Default \code{NULL}.}
 
-\item{mrg}{Logical. If `FALSE`, returns the aggregated result. If `TRUE`,
-merges result back into `DT`. Default `FALSE`.}
+\item{mrg}{Logical. If \code{FALSE}, returns the aggregated result. If \code{TRUE},
+merges result back into \code{DT}. Default \code{FALSE}.}
 
-\item{disclosure}{Logical. If `TRUE`, dominance and observation-count
-columns are added for disclosure control (only when `mrg = FALSE`).
-Default `TRUE`.}
+\item{disclosure}{Logical. If \code{TRUE}, dominance and observation-count
+columns are added for disclosure control (only when \code{mrg = FALSE}).
+Default \code{TRUE}.}
 }
 \value{
-A `data.table` containing the aggregated variables from `var_list`
-  at each requested hierarchy level, combined via `rbindlist`. A `node`
-  column identifies the aggregation level of each row.
+A \code{data.table} containing the aggregated variables from \code{var_list}
+at each requested hierarchy level, combined via \code{rbindlist}. A \code{node}
+column identifies the aggregation level of each row.
 }
 \description{
-Aggregates variables in `var_list` to unique values of the hierarchical
-dimensions specified in `hhfile` by groups. Aggregation is performed at
-each level specified by `hier` using [`mdi_aggregate()`].
+Aggregates variables in \code{var_list} to unique values of the hierarchical
+dimensions specified in \code{hhfile} by groups. Aggregation is performed at
+each level specified by \code{hier} using \code{\link[=mdi_aggregate]{mdi_aggregate()}}.
 }
 \examples{
 library(data.table)

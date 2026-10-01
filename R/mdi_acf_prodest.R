@@ -7,8 +7,8 @@
 #' effects) to recover the productivity proxy Phi, followed by GMM
 #' minimization to identify input elasticities.
 #'
-#' tfp = (Phi or y) - X*beta depending on \code{TFP_minuend}; with
-#' \code{TFP_minuend = "y"} this matches the y - X*beta convention of the
+#' \code{tfp = (Phi or y) - X*beta} depending on \code{TFP_minuend}; with
+#' \code{TFP_minuend = "y"} this matches the \code{y - X*beta} convention of the
 #' other estimators.
 #'
 #' @param DT A \code{data.table} (or coercible object) containing the panel data.

@@ -45,9 +45,9 @@ Default \code{1e-10}.}
 }
 \value{
 A \code{data.table} with one row per observation in the GMM sample,
-  containing \code{id}, \code{time}, \code{tfp}, \code{alpha_hat},
-  \code{el_<input>}, \code{se_el_<input>}, \code{NumObs}, and optionally
-  \code{TFP_demeaned}.
+containing \code{id}, \code{time}, \code{tfp}, \code{alpha_hat},
+\code{el_<input>}, \code{se_el_<input>}, \code{NumObs}, and optionally
+\code{TFP_demeaned}.
 }
 \description{
 Implements the stacked two-equation GMM from Wooldridge (2009, Economics

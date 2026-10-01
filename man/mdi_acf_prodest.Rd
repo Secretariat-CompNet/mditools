@@ -74,14 +74,16 @@ optimiser bounds. Default \code{FALSE}.}
 }
 \value{
 A \code{data.table} with one row per observation in the GMM sample,
-  containing:
-- \code{id}, \code{time} columns (using the names supplied)
-- \code{tfp}: total factor productivity
-- \code{el_<input>}: estimated input elasticity for each input
-- \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE}): period-demeaned TFP
-- \code{g_b_slopes}, \code{g_b_intercept} (if \code{Omega_estimates = TRUE})
-- \code{NumObs}: number of observations used in the GMM stage
-- \code{convergence}: optimiser convergence code (0 = converged)
+containing:
+\itemize{
+\item \code{id}, \code{time} columns (using the names supplied)
+\item \code{tfp}: total factor productivity
+\item \code{el_<input>}: estimated input elasticity for each input
+\item \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE}): period-demeaned TFP
+\item \code{g_b_slopes}, \code{g_b_intercept} (if \code{Omega_estimates = TRUE})
+\item \code{NumObs}: number of observations used in the GMM stage
+\item \code{convergence}: optimiser convergence code (0 = converged)
+}
 }
 \description{
 Estimates a production function using the Ackerberg-Caves-Frazer (ACF)
@@ -90,8 +92,8 @@ GMM procedure: a first-stage OLS (with optional polynomial and time fixed
 effects) to recover the productivity proxy Phi, followed by GMM
 minimization to identify input elasticities.
 
-tfp = (Phi or y) - X*beta depending on \code{TFP_minuend}; with
-\code{TFP_minuend = "y"} this matches the y - X*beta convention of the
+\code{tfp = (Phi or y) - X*beta} depending on \code{TFP_minuend}; with
+\code{TFP_minuend = "y"} this matches the \code{y - X*beta} convention of the
 other estimators.
 }
 \examples{

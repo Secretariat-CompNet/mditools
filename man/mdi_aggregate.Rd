@@ -20,67 +20,71 @@ mdi_aggregate(
 )
 }
 \arguments{
-\item{DT}{A `data.table` containing the data to aggregate.}
+\item{DT}{A \code{data.table} containing the data to aggregate.}
 
 \item{var_list}{A character vector of variable names to aggregate.}
 
 \item{bygroups}{A character vector of grouping variables defining the aggregation level.}
 
 \item{agg_type}{A character vector specifying the type(s) of aggregation to perform.
-Supported types: `"sum"`, `"sd"`, `"mean"`, `"q10"`,`"q25"`, `"median"`, `"q75"`, `"q90"`,
-`"count"`, `"nmiss"`, `"n_nonmiss"`, `"nempty"`, `"nzero"`, `"npos"`, and `"HHI"`.
-Default is `"sum"`.}
+Supported types: \code{"sum"}, \code{"sd"}, \code{"mean"}, \code{"q10"},\code{"q25"}, \code{"median"}, \code{"q75"}, \code{"q90"},
+\code{"count"}, \code{"nmiss"}, \code{"n_nonmiss"}, \code{"nempty"}, \code{"nzero"}, \code{"npos"}, and \code{"HHI"}.
+Default is \code{"sum"}.}
 
-\item{weight_col}{Optional character string naming a weight column in `DT` for
-weighted aggregates. Default is `NULL`.}
+\item{weight_col}{Optional character string naming a weight column in \code{DT} for
+weighted aggregates. Default is \code{NULL}.}
 
-\item{mrg}{Logical. If `TRUE`, aggregated statistics are merged back into the
-original dataset as new variables. If `FALSE`, a new aggregated `data.table`
-is returned. Default is `FALSE`.}
+\item{mrg}{Logical. If \code{TRUE}, aggregated statistics are merged back into the
+original dataset as new variables. If \code{FALSE}, a new aggregated \code{data.table}
+is returned. Default is \code{FALSE}.}
 
-\item{disclosure}{Logical. If `TRUE` and `mrg = FALSE`, disclosure criteria are
+\item{disclosure}{Logical. If \code{TRUE} and \code{mrg = FALSE}, disclosure criteria are
 applied, adding dominance indicators and number of observations for
-disclosure control. Default is `TRUE`.}
+disclosure control. Default is \code{TRUE}.}
 
-\item{count_firms}{Logical. If `TRUE`, adds a column `NumFirms` containing
+\item{count_firms}{Logical. If \code{TRUE}, adds a column \code{NumFirms} containing
 the number of unique firms in the input dataset. A firm identifier column
-(`plantid`, `firmid`, `entid`, or `entgrp`) must be present. Default is `FALSE`.}
+(\code{plantid}, \code{firmid}, \code{entid}, or \code{entgrp}) must be present. Default is \code{FALSE}.}
 
-\item{dom_formula}{Character. Dominance formula passed to [`mdi_disclose_crit()`]
-when `disclosure = TRUE`. `"top_share"` (default) computes the share of the
-top `domNr` firms; `"residual"` computes \eqn{(Total - x_1 - x_2) / x_1}.}
+\item{dom_formula}{Character. Dominance formula passed to \code{\link[=mdi_disclose_crit]{mdi_disclose_crit()}}
+when \code{disclosure = TRUE}. \code{"top_share"} (default) computes the share of the
+top \code{domNr} firms; \code{"residual"} computes \eqn{(Total - x_1 - x_2) / x_1}.}
 
 \item{domVar}{Character. Name of the dominance variable passed to
-[`mdi_disclose_crit()`]. Use `"var"` (default) to compute dominance per
-output variable, or supply a column name (e.g. `"emp"`) to use a fixed
-dominance variable. Set to `MDIdomVar` in module code.}
+\code{\link[=mdi_disclose_crit]{mdi_disclose_crit()}}. Use \code{"var"} (default) to compute dominance per
+output variable, or supply a column name (e.g. \code{"emp"}) to use a fixed
+dominance variable. Set to \code{MDIdomVar} in module code.}
 
 \item{domNr}{Integer. Number of top firms used in the dominance check,
-passed to [`mdi_disclose_crit()`]. Default is `2`; set to `MDIdomNr` in
+passed to \code{\link[=mdi_disclose_crit]{mdi_disclose_crit()}}. Default is \code{2}; set to \code{MDIdomNr} in
 module code.}
 
 \item{minNumObs}{Integer. Minimum number of observations used for the
-quantile smoothing window in `"q10"`, `"q25"`, `"median"`, `"q75"`, `"q90"`
-aggregation types. Default is `5`.}
+quantile smoothing window in \code{"q10"}, \code{"q25"}, \code{"median"}, \code{"q75"}, \code{"q90"}
+aggregation types. Default is \code{5}.}
 }
 \value{
-- If `mrg = FALSE`: An aggregated `data.table` containing the requested statistics,
-  optionally with disclosure variables and number of firms.
-- If `mrg = TRUE`: The input `data.table` with new columns containing the
-  aggregated statistics.
+\itemize{
+\item If \code{mrg = FALSE}: An aggregated \code{data.table} containing the requested statistics,
+optionally with disclosure variables and number of firms.
+\item If \code{mrg = TRUE}: The input \code{data.table} with new columns containing the
+aggregated statistics.
+}
 }
 \description{
 Aggregates variables from a sub-aggregate level to a higher aggregate level
-within a `data.table`. Supports multiple aggregation types, including sum,
-standard deviation, mean, quantiles (25%, 50%, 75%), median, count, number of
+within a \code{data.table}. Supports multiple aggregation types, including sum,
+standard deviation, mean, quantiles (25\%, 50\%, 75\%), median, count, number of
 missing values, number of non-missing values, number of empty strings,
 number of zeros, number of positive values, and the Herfindahl-Hirschman Index (HHI).
 
 The function can optionally:
-- apply a weight column to variables before aggregation,
-- merge aggregated statistics back into the original dataset,
-- compute the number of unique firms in the input data,
-- and apply disclosure control criteria.
+\itemize{
+\item apply a weight column to variables before aggregation,
+\item merge aggregated statistics back into the original dataset,
+\item compute the number of unique firms in the input data,
+\item and apply disclosure control criteria.
+}
 }
 \examples{
 library(data.table)

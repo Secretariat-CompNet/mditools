@@ -1,4 +1,21 @@
+#' Argument checks
+#'
+#' Small validators that stop with a clear message naming the argument.
+#' Exported, but internal, so packages built on mditools can reuse them.
+#'
+#' @param x The value to check.
+#' @param DT The value to check: must be a `data.table`.
+#' @param arg_name Character, the argument's name, used in the message.
+#' @param choices Character vector of the allowed values.
+#' @param required_cols Character vector of columns `DT` must have.
+#'
+#' @return `NULL`, invisibly; called for the error it raises.
+#'
+#' @name check_dt
 #' @keywords internal
+NULL
+
+#' @rdname check_dt
 #' @export
 check_choice <- function(x, arg_name, choices) {
   if (!x %in% choices)
@@ -6,21 +23,21 @@ check_choice <- function(x, arg_name, choices) {
                 paste(paste0('"', choices, '"'), collapse = ", "), "."))
 }
 
-#' @keywords internal
+#' @rdname check_dt
 #' @export
 check_string <- function(x, arg_name) {
   if (!is.character(x) || length(x) != 1L || nchar(x) == 0L)
     stop(paste0("'", arg_name, "' must be a non-empty character string."))
 }
 
-#' @keywords internal
+#' @rdname check_dt
 #' @export
 check_char_vec <- function(x, arg_name) {
   if (!is.character(x) || length(x) == 0L)
     stop(paste0("'", arg_name, "' must be a non-empty character vector."))
 }
 
-#' @keywords internal
+#' @rdname check_dt
 #' @export
 check_dt <- function(DT, required_cols = character(0), arg_name = "DT") {
   if (!data.table::is.data.table(DT))

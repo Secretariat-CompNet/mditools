@@ -14,20 +14,20 @@ mdi_outlier(
 )
 }
 \arguments{
-\item{DT}{A `data.table` containing the variables to process.}
+\item{DT}{A \code{data.table} containing the variables to process.}
 
-\item{var_list}{A character vector of continuous variable names in `DT` to be processed by the outlier routine.}
+\item{var_list}{A character vector of continuous variable names in \code{DT} to be processed by the outlier routine.}
 
-\item{routine}{A string specifying the outlier routine to apply: `"trim"`, `"winsorize"`, or `"flag"`. Default `"trim"`.}
+\item{routine}{A string specifying the outlier routine to apply: \code{"trim"}, \code{"winsorize"}, or \code{"flag"}. Default \code{"trim"}.}
 
 \item{fraction}{The fraction of data to be trimmed or winsorized; must be a numeric value between 0 and 1.}
 
-\item{both_tails}{Logical indicating whether to apply the routine to both tails of the distribution. If `TRUE`, the operation affects both the upper and lower tails; otherwise, it affects only the upper tail. Default `FALSE`.}
+\item{both_tails}{Logical indicating whether to apply the routine to both tails of the distribution. If \code{TRUE}, the operation affects both the upper and lower tails; otherwise, it affects only the upper tail. Default \code{FALSE}.}
 
-\item{group}{An optional character vector naming one or more grouping variables in `DT`. When supplied, the outlier routine is applied within each group. Default `NULL`.}
+\item{group}{An optional character vector naming one or more grouping variables in \code{DT}. When supplied, the outlier routine is applied within each group. Default \code{NULL}.}
 }
 \value{
-A modified copy of `DT` with the outlier routine applied to the specified variables. If `routine = "flag"`, new columns named `flag_<var>` are added (value `1` for flagged observations, `NA` otherwise).
+A modified copy of \code{DT} with the outlier routine applied to the specified variables. If \code{routine = "flag"}, new columns named \verb{flag_<var>} are added (value \code{1} for flagged observations, \code{NA} otherwise).
 }
 \description{
 Executes a specified outlier handling routine (trimming, winsorizing, or flagging) on a dataset for selected continuous variables. This function can trim or winsorize the data at specified quantiles or flag observations as outliers based on the fraction provided. Trimming replaces outliers with NA, winsorizing replaces outliers with the closest value within the non-outlier range, and flagging marks outliers with a flag variable.

@@ -43,22 +43,26 @@ cost-shares index.}
 }
 \value{
 A \code{data.table} with one row per observation (after cost-share
-  filtering), containing:
-- \code{id}, \code{time}, \code{bygroup} columns
-- \code{el_<endog>}, \code{el_<exog>}: averaged input elasticities
-- \code{tfp}: total factor productivity (log-index residual)
-- \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE})
-- \code{NumObs}: total number of observations used (matches the convention
-  of the other estimators in this suite)
+filtering), containing:
+\itemize{
+\item \code{id}, \code{time}, \code{bygroup} columns
+\item \code{el_<endog>}, \code{el_<exog>}: averaged input elasticities
+\item \code{tfp}: total factor productivity (log-index residual)
+\item \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE})
+\item \code{NumObs}: total number of observations used (matches the convention
+of the other estimators in this suite)
+}
 
 Returns \code{NULL} if no valid observations remain after filtering.
 }
 \description{
 Implements a cost-shares approach to production function estimation:
-- Build firm-time input shares from expenditures in levels.
-- Average shares by \code{(bygroup, time)}.
-- Compute TFP as a log-index residual using averaged shares.
-- Optionally demean TFP by \code{(bygroup, time)}.
+\itemize{
+\item Build firm-time input shares from expenditures in levels.
+\item Average shares by \code{(bygroup, time)}.
+\item Compute TFP as a log-index residual using averaged shares.
+\item Optionally demean TFP by \code{(bygroup, time)}.
+}
 }
 \examples{
 library(data.table)

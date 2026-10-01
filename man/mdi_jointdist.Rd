@@ -23,10 +23,10 @@ mdi_jointdist(
 )
 }
 \arguments{
-\item{DT}{A `data.table` containing variables for distribution calculations.}
+\item{DT}{A \code{data.table} containing variables for distribution calculations.}
 
-\item{hhfile}{A `data.table` containing hierarchical information for
-aggregation. Must have an `h_0` column matching `bygroups[1]`.}
+\item{hhfile}{A \code{data.table} containing hierarchical information for
+aggregation. Must have an \code{h_0} column matching \code{bygroups[1]}.}
 
 \item{qnames}{Character vector. Names of variables used for calculating
 distributional moments.}
@@ -35,42 +35,42 @@ distributional moments.}
 are computed.}
 
 \item{moment}{Character scalar. Distributional moment to compute. One of
-`"decile"`, `"quintile"`, or `"quartile"`. Default `"decile"`.}
+\code{"decile"}, \code{"quintile"}, or \code{"quartile"}. Default \code{"decile"}.}
 
 \item{bygroups}{Character vector. Variables used for stratification.}
 
-\item{hier}{Character scalar. Hierarchical level for aggregation. `"ALL"`
-uses all levels in `hhfile`; otherwise specify a column name.}
+\item{hier}{Character scalar. Hierarchical level for aggregation. \code{"ALL"}
+uses all levels in \code{hhfile}; otherwise specify a column name.}
 
-\item{agg_type}{Character scalar. Type of aggregation (e.g. `"sum"`,
-`"mean"`).}
+\item{agg_type}{Character scalar. Type of aggregation (e.g. \code{"sum"},
+\code{"mean"}).}
 
 \item{prefix}{Character scalar. Prefix for naming aggregated variables.
-Default is the value of `agg_type`.}
+Default is the value of \code{agg_type}.}
 
 \item{weight_col}{Optional character scalar. Name of a weight column in
-`DT` for weighted aggregation.}
+\code{DT} for weighted aggregation.}
 
 \item{mrg}{Logical. Whether to merge results back with the original data
-table. Default `FALSE`.}
+table. Default \code{FALSE}.}
 
 \item{disclosure}{Logical. Whether to apply disclosure control. Default
-`TRUE`.}
+\code{TRUE}.}
 
 \item{minNumObs}{Integer. Minimum number of observations for the quantile
-smoothing window in `mdi_aggregate`. Set to `MDIminNumObs` in module code.
-Default `5L`.}
+smoothing window in \code{mdi_aggregate}. Set to \code{MDIminNumObs} in module code.
+Default \code{5L}.}
 
-\item{domVar}{Character. Dominance variable passed to `mdi_aggregate`.
-Set to `MDIdomVar` in module code. Default `"var"`.}
+\item{domVar}{Character. Dominance variable passed to \code{mdi_aggregate}.
+Set to \code{MDIdomVar} in module code. Default \code{"var"}.}
 
 \item{domNr}{Integer. Number of top firms for dominance check passed to
-`mdi_aggregate`. Set to `MDIdomNr` in module code. Default `2L`.}
+\code{mdi_aggregate}. Set to \code{MDIdomNr} in module code. Default \code{2L}.}
 }
 \value{
-A `data.table` with computed joint distributions including the
-  distributional moments for specified variables aggregated by the given
-  criteria.
+A \code{data.table} with computed joint distributions including the
+distributional moments for specified variables aggregated by the given
+criteria.
 }
 \description{
 Computes joint distributions for specified variables within a data table.

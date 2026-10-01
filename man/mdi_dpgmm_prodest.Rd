@@ -35,13 +35,13 @@ period mean. Default \code{TRUE}.}
 }
 \value{
 A \code{data.table} with one row per firm-year (subset where y,
-  endog, exog are non-missing). Columns: \code{id}, \code{time},
-  \code{el_<endog>}, \code{el_<exog>}, \code{se_el_<endog>},
-  \code{se_el_<exog>}, \code{rho}, \code{se_rho}, \code{tfp}, \code{NumObs},
-  the diagnostics \code{sargan_J}/\code{sargan_df}/\code{sargan_pval} and
-  \code{ar1_z}/\code{ar1_pval}/\code{ar2_z}/\code{ar2_pval}, and optionally
-  \code{TFP_demeaned}. Under iid \eqn{\varepsilon}: AR(1) should reject,
-  AR(2) should not; Sargan tests the overidentifying restrictions.
+endog, exog are non-missing). Columns: \code{id}, \code{time},
+\code{el_<endog>}, \code{el_<exog>}, \code{se_el_<endog>},
+\code{se_el_<exog>}, \code{rho}, \code{se_rho}, \code{tfp}, \code{NumObs},
+the diagnostics \code{sargan_J}/\code{sargan_df}/\code{sargan_pval} and
+\code{ar1_z}/\code{ar1_pval}/\code{ar2_z}/\code{ar2_pval}, and optionally
+\code{TFP_demeaned}. Under iid \eqn{\varepsilon}: AR(1) should reject,
+AR(2) should not; Sargan tests the overidentifying restrictions.
 }
 \description{
 Estimates the dynamic Cobb-Douglas production function

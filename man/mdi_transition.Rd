@@ -8,18 +8,18 @@ mdi_transition(DT, id, time, classvar)
 }
 \arguments{
 \item{DT}{A data.table containing the panel data. Modified in place by
-sorting on `id` and `time` before processing.}
+sorting on \code{id} and \code{time} before processing.}
 
-\item{id}{Character. Name of the unit identifier column (e.g. `"firmid"`).}
+\item{id}{Character. Name of the unit identifier column (e.g. \code{"firmid"}).}
 
-\item{time}{Character. Name of the time variable column (e.g. `"year"`).}
+\item{time}{Character. Name of the time variable column (e.g. \code{"year"}).}
 
 \item{classvar}{Character. Name of the classification variable column
-(e.g. `"nace"`).}
+(e.g. \code{"nace"}).}
 }
 \value{
-A data.table with four columns: `old_code`, `new_code`,
-  `year_shifted`, and `N` (count of units making that switch in that year).
+A data.table with four columns: \code{old_code}, \code{new_code},
+\code{year_shifted}, and \code{N} (count of units making that switch in that year).
 }
 \description{
 Identifies pairs of classification codes between which a unit switched in a

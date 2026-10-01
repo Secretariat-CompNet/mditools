@@ -12,29 +12,29 @@ mdi_disclose_reg_tab(
 )
 }
 \arguments{
-\item{DT}{A `data.table` containing regression output. Must include the
-columns `"coef"` and—depending on `disc_method`—either `"df"` and
-`"NumObs"` (for `"obs_df"`) or `"NumFirms"` and `"NumEnt"` (for
-`"firm_count"`).}
+\item{DT}{A \code{data.table} containing regression output. Must include the
+columns \code{"coef"} and—depending on \code{disc_method}—either \code{"df"} and
+\code{"NumObs"} (for \code{"obs_df"}) or \code{"NumFirms"} and \code{"NumEnt"} (for
+\code{"firm_count"}).}
 
 \item{min_obs}{Numeric. Minimum threshold used for disclosure checks.
-Default `5`.}
+Default \code{5}.}
 
-\item{show_disclosed}{Logical. If `TRUE`, disclosed values are shown even
-when flagged. If `FALSE` (default), disclosed values are masked with `NA`.}
+\item{show_disclosed}{Logical. If \code{TRUE}, disclosed values are shown even
+when flagged. If \code{FALSE} (default), disclosed values are masked with \code{NA}.}
 
-\item{disc_method}{Character. Disclosure rule to apply. `"obs_df"` (default)
-flags rows where `df < min_obs` or `NumObs < min_obs`. `"firm_count"` flags
-rows where `NumFirms < min_obs` or `NumEnt < min_obs` (used for Germany).}
+\item{disc_method}{Character. Disclosure rule to apply. \code{"obs_df"} (default)
+flags rows where \code{df < min_obs} or \code{NumObs < min_obs}. \code{"firm_count"} flags
+rows where \code{NumFirms < min_obs} or \code{NumEnt < min_obs} (used for Germany).}
 }
 \value{
 A list with three elements:
-  \item{DT}{A `data.table` of the regression output with disclosure rules applied.
-  Masked cells are set to `NA` (unless `show_disclosed = TRUE`).}
-  \item{vars}{A character string listing the disclosed coefficient names
-  (for use in output description). If all rows are masked, returns
-  `"No coefficients disclosed (all masked)"`.}
-  \item{redacted_n}{An integer count of the number of rows flagged and masked.}
+\item{DT}{A \code{data.table} of the regression output with disclosure rules applied.
+Masked cells are set to \code{NA} (unless \code{show_disclosed = TRUE}).}
+\item{vars}{A character string listing the disclosed coefficient names
+(for use in output description). If all rows are masked, returns
+\code{"No coefficients disclosed (all masked)"}.}
+\item{redacted_n}{An integer count of the number of rows flagged and masked.}
 }
 \description{
 Applies disclosure control rules to regression output tables.
@@ -43,13 +43,15 @@ observations, or (for Germany) number of firms are flagged and sensitive
 regression statistics are masked.
 }
 \details{
-- **`disc_method = "obs_df"`:** disclosure is triggered when either
-  `df < min_obs` or `NumObs < min_obs`.
-- **`disc_method = "firm_count"`:** disclosure is based on
-  `NumFirms < min_obs` or `NumEnt < min_obs`. Used for Germany.
-- The following regression statistics may be masked if disclosure applies:
-  `"Estimate"`, `"Std. Error"`, `"z value"`, `"Pr(>|z|)"`,
-  `"ci.lower"`, `"ci.upper"`, `"R2"`, `"AdjR2"`, `"AIC"`, `"BIC"`, `"LogLik"`.
+\itemize{
+\item \strong{\code{disc_method = "obs_df"}:} disclosure is triggered when either
+\code{df < min_obs} or \code{NumObs < min_obs}.
+\item \strong{\code{disc_method = "firm_count"}:} disclosure is based on
+\code{NumFirms < min_obs} or \code{NumEnt < min_obs}. Used for Germany.
+\item The following regression statistics may be masked if disclosure applies:
+\code{"Estimate"}, \code{"Std. Error"}, \code{"z value"}, \code{"Pr(>|z|)"},
+\code{"ci.lower"}, \code{"ci.upper"}, \code{"R2"}, \code{"AdjR2"}, \code{"AIC"}, \code{"BIC"}, \code{"LogLik"}.
+}
 }
 \examples{
 library(data.table)

@@ -26,100 +26,104 @@ mdi_regress(
 )
 }
 \arguments{
-\item{DT}{A `data.table` containing the dataset for regression analysis.}
+\item{DT}{A \code{data.table} containing the dataset for regression analysis.}
 
 \item{formula}{A character vector of regression formulas.}
 
-\item{model}{Character. The regression model to use (e.g. `"feols"`, `"feglm"`).
-Default is `"feols"`.}
+\item{model}{Character. The regression model to use (e.g. \code{"feols"}, \code{"feglm"}).
+Default is \code{"feols"}.}
 
 \item{family}{Family specification for GLM models (only relevant if
-`model = "feglm"`). Example: `binomial`.}
+\code{model = "feglm"}). Example: \code{binomial}.}
 
 \item{vcov}{Variance-covariance specification for standard errors.
-Can be `"iid"` (default) or a formula for clustered SE (e.g. `~clustervar`).}
+Can be \code{"iid"} (default) or a formula for clustered SE (e.g. \code{~clustervar}).}
 
-\item{cluster}{Logical. If `TRUE`, standard errors are clustered. In this case
-`vcov` must specify the clustering variable. Default is `FALSE`.}
+\item{cluster}{Logical. If \code{TRUE}, standard errors are clustered. In this case
+\code{vcov} must specify the clustering variable. Default is \code{FALSE}.}
 
-\item{tex}{Logical. If `TRUE`, regression results are exported as a LaTeX
-table using `etable()`. Default is `FALSE`.}
+\item{tex}{Logical. If \code{TRUE}, regression results are exported as a LaTeX
+table using \code{etable()}. Default is \code{FALSE}.}
 
 \item{output_name}{Character. Name of the LaTeX output file (without extension),
-if `tex = TRUE`. Default is `NULL`.}
+if \code{tex = TRUE}. Default is \code{NULL}.}
 
 \item{desc_file}{Character. Name of a description file to which an entry for
-the regression output is appended (if `tex = TRUE`). Default is `NULL`.}
+the regression output is appended (if \code{tex = TRUE}). Default is \code{NULL}.}
 
 \item{weights}{Optional formula specifying the weights variable to apply
-in the regression (e.g. `~myweights`). Default is `NULL`.}
+in the regression (e.g. \code{~myweights}). Default is \code{NULL}.}
 
-\item{iv}{Logical. If `TRUE`, the regression is treated as an instrumental
-variable model and IV-specific fit statistics are reported. Default is `FALSE`.}
+\item{iv}{Logical. If \code{TRUE}, the regression is treated as an instrumental
+variable model and IV-specific fit statistics are reported. Default is \code{FALSE}.}
 
 \item{num_firms}{Optional integer. Number of unique firms to use when
-`count_firms = TRUE` but `firm_col` is not found in the data. Default `NULL`.}
+\code{count_firms = TRUE} but \code{firm_col} is not found in the data. Default \code{NULL}.}
 
 \item{num_ent}{Optional integer. Number of unique enterprises to use when
-`count_firms = TRUE` but `ent_col` is not found in the data. Default `NULL`.}
+\code{count_firms = TRUE} but \code{ent_col} is not found in the data. Default \code{NULL}.}
 
-\item{count_firms}{Logical. If `TRUE`, the number of unique firms and
+\item{count_firms}{Logical. If \code{TRUE}, the number of unique firms and
 enterprises in the regression sample are computed and added to the output
-as `NumFirms` and `NumEnt`. The columns used are controlled by `firm_col`
-and `ent_col`. Set to `TRUE` when NSI disclosure rules require firm-level
-counts. Default `FALSE`.}
+as \code{NumFirms} and \code{NumEnt}. The columns used are controlled by \code{firm_col}
+and \code{ent_col}. Set to \code{TRUE} when NSI disclosure rules require firm-level
+counts. Default \code{FALSE}.}
 
-\item{firm_col}{Character. Name of the column in `DT` that identifies firms,
-used to count unique firms when `count_firms = TRUE`. Falls back to
-`num_firms` if the column is absent. Default `"firmid"`.}
+\item{firm_col}{Character. Name of the column in \code{DT} that identifies firms,
+used to count unique firms when \code{count_firms = TRUE}. Falls back to
+\code{num_firms} if the column is absent. Default \code{"firmid"}.}
 
-\item{ent_col}{Character. Name of the column in `DT` that identifies
-enterprises, used to count unique enterprises when `count_firms = TRUE`.
-Falls back to `num_ent` if the column is absent. Default `"entid"`.}
+\item{ent_col}{Character. Name of the column in \code{DT} that identifies
+enterprises, used to count unique enterprises when \code{count_firms = TRUE}.
+Falls back to \code{num_ent} if the column is absent. Default \code{"entid"}.}
 
 \item{minNumObs}{Integer. Minimum observations and degrees of freedom
-required for a regression to pass disclosure. Default `5L`.}
+required for a regression to pass disclosure. Default \code{5L}.}
 
 \item{dirOUTPUT}{Character. Path to the output directory (must end with
-`"/"`), used when `tex = TRUE`. Default `NULL`.}
+\code{"/"}), used when \code{tex = TRUE}. Default \code{NULL}.}
 }
 \value{
-A `data.table` of regression results, including:
-- Coefficients and standard errors
-- Confidence intervals (`ci.lower`, `ci.upper`)
-- Sample size (`NumObs`), residual df (`df`)
-- `NumFirms` and `NumEnt` (only when `count_firms = TRUE`)
-- Fit statistics (R2, Adj. R2, AIC, BIC, LogLik, and IV/F tests if applicable)
+A \code{data.table} of regression results, including:
+\itemize{
+\item Coefficients and standard errors
+\item Confidence intervals (\code{ci.lower}, \code{ci.upper})
+\item Sample size (\code{NumObs}), residual df (\code{df})
+\item \code{NumFirms} and \code{NumEnt} (only when \code{count_firms = TRUE})
+\item Fit statistics (R2, Adj. R2, AIC, BIC, LogLik, and IV/F tests if applicable)
+}
 
 If disclosure criteria are not satisfied, the regression is skipped and a
 message is printed.
 }
 \description{
-Runs regression analysis on a `data.table` using models from the **fixest** package
-(`feols`, `feglm`, etc.), with automatic disclosure control applied.
+Runs regression analysis on a \code{data.table} using models from the \strong{fixest} package
+(\code{feols}, \code{feglm}, etc.), with automatic disclosure control applied.
 
 Disclosure rules ensure that regressions are only reported if they meet
 minimum thresholds for sample size: both the number of observations and the
-residual degrees of freedom must be at least `minNumObs`.
+residual degrees of freedom must be at least \code{minNumObs}.
 
-When `count_firms = TRUE`, the number of unique firms and enterprises in the
-regression sample are also computed and added to the output (`NumFirms`,
-`NumEnt`). This is controlled by the caller -- typically set based on the
+When \code{count_firms = TRUE}, the number of unique firms and enterprises in the
+regression sample are also computed and added to the output (\code{NumFirms},
+\code{NumEnt}). This is controlled by the caller -- typically set based on the
 country-specific disclosure requirements of the NSI running the code.
 
 The function supports clustered standard errors, regression weights,
 instrumental variables, and optional LaTeX export of results.
 }
 \details{
-- Regression output is only returned if both `nobs >= minNumObs` and
-  residual degrees of freedom `>= minNumObs`.
-- When `count_firms = TRUE`: unique firm and enterprise counts are computed
-  from the regression sample using `firm_col` and `ent_col`. If a column is
-  absent from the data, the corresponding `num_firms` or `num_ent` argument
-  is used instead. If neither the column nor the manual count is provided,
-  the function stops with an error before any regression is run.
-- If `tex = TRUE`, results are saved to `<dirOUTPUT>/<output_name>.tex` and an
-  entry is appended to `<dirOUTPUT>/<desc_file>.txt`.
+\itemize{
+\item Regression output is only returned if both \code{nobs >= minNumObs} and
+residual degrees of freedom \verb{>= minNumObs}.
+\item When \code{count_firms = TRUE}: unique firm and enterprise counts are computed
+from the regression sample using \code{firm_col} and \code{ent_col}. If a column is
+absent from the data, the corresponding \code{num_firms} or \code{num_ent} argument
+is used instead. If neither the column nor the manual count is provided,
+the function stops with an error before any regression is run.
+\item If \code{tex = TRUE}, results are saved to \verb{<dirOUTPUT>/<output_name>.tex} and an
+entry is appended to \verb{<dirOUTPUT>/<desc_file>.txt}.
+}
 }
 \examples{
 library(data.table)

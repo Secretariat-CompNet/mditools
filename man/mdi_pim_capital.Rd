@@ -17,32 +17,34 @@ mdi_pim_capital(
 \arguments{
 \item{DT}{A data.table including the necessary variables.}
 
-\item{id}{Column name of the firm (unit) identifier. Default is `"firmid"`.}
+\item{id}{Column name of the firm (unit) identifier. Default is \code{"firmid"}.}
 
 \item{K0}{Column name for the real initial capital stock value. Default is
-`"K0"`.}
+\code{"K0"}.}
 
-\item{I}{Column name for real investment. Default is `"ni_tan"`.}
+\item{I}{Column name for real investment. Default is \code{"ni_tan"}.}
 
-\item{delta}{Column name for the depreciation rate. Default is `"d_GFCF"`.}
+\item{delta}{Column name for the depreciation rate. Default is \code{"d_GFCF"}.}
 
 \item{output_name}{Name of the output variable for the estimated capital stock.
-Default is `"k_new"`.}
+Default is \code{"k_new"}.}
 
-\item{time}{Name of the time variable. Default is `"year"`.}
+\item{time}{Name of the time variable. Default is \code{"year"}.}
 }
 \value{
-A modified `DT` with the new capital stock variable appended.
+A modified \code{DT} with the new capital stock variable appended.
 }
 \description{
 Estimates capital stock based on the Perpetual Inventory Method (PIM),
 as outlined in Halle & Mairesse (1995). This function is tailored for data
-structured as panel data, with indexing based on a firm identifier (`firmid`)
+structured as panel data, with indexing based on a firm identifier (\code{firmid})
 and a year variable. It involves the following steps:
-- Reading the specified variables from the input data.table.
-- Depending on whether the depreciation rate is provided directly or inferred
-  from the asset type, the function calculates the capital stock.
-- The output is the input data.table augmented with the new capital stock variable.
+\itemize{
+\item Reading the specified variables from the input data.table.
+\item Depending on whether the depreciation rate is provided directly or inferred
+from the asset type, the function calculates the capital stock.
+\item The output is the input data.table augmented with the new capital stock variable.
+}
 
 The function supports different depreciation formats and asset types, offering
 flexibility in estimating capital stock across various contexts.

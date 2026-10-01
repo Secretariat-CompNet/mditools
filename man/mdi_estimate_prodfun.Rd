@@ -62,14 +62,14 @@ from the output. Default \code{TRUE}.}
 }
 \value{
 A \code{data.table} with one row per firm-year (or per used observation), containing
-  \code{bygroup}, \code{method}, \code{id}, \code{time}, \code{el_<var>}, \code{tfp}, and
-  method-specific extras (\code{TFP_demeaned}, \code{rho}, \code{se_el_<var>}, diagnostics),
-  plus \code{NumObs}.
+\code{bygroup}, \code{method}, \code{id}, \code{time}, \code{el_<var>}, \code{tfp}, and
+method-specific extras (\code{TFP_demeaned}, \code{rho}, \code{se_el_<var>}, diagnostics),
+plus \code{NumObs}.
 }
 \description{
 \code{mdi_estimate_prodfun()} is a wrapper that estimates Cobb-Douglas production functions
 on firm-level panel data using a selectable set of estimators (methods).
-It is designed for *grid runs* across within-method specifications (e.g., degree choices,
+It is designed for \emph{grid runs} across within-method specifications (e.g., degree choices,
 time fixed effects, alternative demeaning) and returns standardized outputs that can be
 pooled across methods and industries.
 
@@ -77,14 +77,15 @@ The wrapper is typically run "by industry" (or another grouping variable) using 
 Within each group, the function calls one estimator at a time and binds results into a common
 panel-style output format including:
 \itemize{
-  \item firm id and year (or generic \code{id}, \code{time})
-  \item elasticities with standardized names \code{el_<var>}
-  \item total factor productivity proxy (\code{tfp}) and optional de-meaned version (\code{TFP_demeaned})
-  \item book-keeping: \code{NumObs}, plus method/spec identifiers if requested
+\item firm id and year (or generic \code{id}, \code{time})
+\item elasticities with standardized names \code{el_<var>}
+\item total factor productivity proxy (\code{tfp}) and optional de-meaned version (\code{TFP_demeaned})
+\item book-keeping: \code{NumObs}, plus method/spec identifiers if requested
 }
 }
 \details{
-## Input convention
+\subsection{Input convention}{
+
 The wrapper assumes all production-function variables are in logs unless a method explicitly
 requires levels (e.g., cost shares with \code{log_values=TRUE} will exponentiate internally).
 
@@ -94,37 +95,41 @@ state input(s) \code{exog}; proxy/instruments \code{instr} (ACF/LP/WRDG); panel 
 
 Each estimator performs its own NA filtering on the variables it needs; hence the effective
 sample can differ by method/spec.
-
-## Methods implemented
-Methods are selected via \code{methods}. The wrapper recognizes:
-\describe{
-  \item{\code{"acf"}}{Ackerberg-Caves-Frazer (2015) control-function estimator (Cobb-Douglas).
-    First-stage polynomial in inputs and proxy to construct \eqn{\Phi}, then a GMM stage with
-    lagged inputs as instruments. Returns firm-level elasticities and a residual-based \code{tfp}.}
-
-  \item{\code{"lp"}}{Levinsohn-Petrin (2003) proxy estimator (Cobb-Douglas).}
-
-  \item{\code{"wdrg"}}{Wooldridge (2009) system-GMM estimator. Stacked two-equation GMM,
-    estimated linearly in the parameters (the polynomial coefficients on \eqn{c(x_t,m_t)} and
-    \eqn{c(x_{t-1},m_{t-1})} are free, separate vectors; this is more general than the
-    random-walk-with-drift case but does not impose the structural AR(G) restriction of a
-    degree-G nonlinear law of motion). Returns common elasticities, \code{se_el_<var>},
-    \code{tfp = y - X*beta}, and \code{alpha_hat} as a diagnostic column.}
-
-  \item{\code{"dpgmm"}}{Arellano-Bond (1991) difference-GMM for the dynamic PF
-    \eqn{y_{it} = \rho y_{i,t-1} + \beta_l l_{it} + \beta_k k_{it} + \alpha_i + \varepsilon_{it}}.
-    First-differences to remove the firm fixed effect; lagged levels of (y, l, k) instrument the
-    differenced regressors (K predetermined, L endogenous). One-step GMM, cluster-robust SEs,
-    Sargan/Hansen and AR(1)/AR(2) diagnostics. Returns \code{el_<var>}, \code{rho},
-    \code{tfp = y - beta_l l - beta_k k}.}
-
-  \item{\code{"ols"}}{Pooled OLS baseline with flexible polynomial controls (Cobb-Douglas).
-    \code{tfp = y - X*beta}. Use \code{degree = 1} for the clean naive baseline.}
-
-  \item{\code{"cs"}}{Cost-shares (index-number) approach for Cobb-Douglas.}
 }
 
-## Method-specific optional arguments (\code{xxxx_args})
+\subsection{Methods implemented}{
+
+Methods are selected via \code{methods}. The wrapper recognizes:
+\describe{
+\item{\code{"acf"}}{Ackerberg-Caves-Frazer (2015) control-function estimator (Cobb-Douglas).
+First-stage polynomial in inputs and proxy to construct \eqn{\Phi}, then a GMM stage with
+lagged inputs as instruments. Returns firm-level elasticities and a residual-based \code{tfp}.}
+
+\item{\code{"lp"}}{Levinsohn-Petrin (2003) proxy estimator (Cobb-Douglas).}
+
+\item{\code{"wdrg"}}{Wooldridge (2009) system-GMM estimator. Stacked two-equation GMM,
+estimated linearly in the parameters (the polynomial coefficients on \eqn{c(x_t,m_t)} and
+\eqn{c(x_{t-1},m_{t-1})} are free, separate vectors; this is more general than the
+random-walk-with-drift case but does not impose the structural AR(G) restriction of a
+degree-G nonlinear law of motion). Returns common elasticities, \code{se_el_<var>},
+\code{tfp = y - X*beta}, and \code{alpha_hat} as a diagnostic column.}
+
+\item{\code{"dpgmm"}}{Arellano-Bond (1991) difference-GMM for the dynamic PF
+\eqn{y_{it} = \rho y_{i,t-1} + \beta_l l_{it} + \beta_k k_{it} + \alpha_i + \varepsilon_{it}}.
+First-differences to remove the firm fixed effect; lagged levels of (y, l, k) instrument the
+differenced regressors (K predetermined, L endogenous). One-step GMM, cluster-robust SEs,
+Sargan/Hansen and AR(1)/AR(2) diagnostics. Returns \code{el_<var>}, \code{rho},
+\code{tfp = y - beta_l l - beta_k k}.}
+
+\item{\code{"ols"}}{Pooled OLS baseline with flexible polynomial controls (Cobb-Douglas).
+\code{tfp = y - X*beta}. Use \code{degree = 1} for the clean naive baseline.}
+
+\item{\code{"cs"}}{Cost-shares (index-number) approach for Cobb-Douglas.}
+}
+}
+
+\subsection{Method-specific optional arguments (\code{xxxx_args})}{
+
 Each method accepts an optional list of tuning arguments passed via a dedicated parameter name:
 \code{acf_args}, \code{lp_args}, \code{wdrg_args}, \code{dpgmm_args}, \code{ols_args}, \code{cs_args}.
 Unspecified fields fall back to method defaults.
@@ -148,6 +153,7 @@ default 2; instrument lag depth), \code{TFP_demeaned}.
 \strong{OLS arguments (\code{ols_args})}: \code{spec}, \code{degree}, \code{TFP_demeaned}.
 
 \strong{Cost shares arguments (\code{cs_args})}: \code{log_values}, \code{TFP_demeaned}.
+}
 }
 \examples{
 \donttest{

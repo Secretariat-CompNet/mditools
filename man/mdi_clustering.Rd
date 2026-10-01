@@ -43,105 +43,109 @@ mdi_clustering(
 \item{cluster_vars}{Character vector with the numeric variables used for
 clustering.}
 
-\item{method}{Clustering method. One of `"kmeans"`, `"hc_ward"`,
-`"hc_complete"`, `"hc_average"`, `"hc_single"`, `"pam"`, `"mclust"`,
-`"dbscan"`.}
+\item{method}{Clustering method. One of \code{"kmeans"}, \code{"hc_ward"},
+\code{"hc_complete"}, \code{"hc_average"}, \code{"hc_single"}, \code{"pam"}, \code{"mclust"},
+\code{"dbscan"}.}
 
-\item{k_selection}{Selection method for k: `"fixed"` or `"automatic"`.}
+\item{k_selection}{Selection method for k: \code{"fixed"} or \code{"automatic"}.}
 
 \item{k_fixed}{Fixed number of clusters. Used only when
-`k_selection = "fixed"`.}
+\code{k_selection = "fixed"}.}
 
-\item{automatic_by_wss}{Logical. If `TRUE`, automatic k selection is based
-on WSS elbow. Default `FALSE`.}
+\item{automatic_by_wss}{Logical. If \code{TRUE}, automatic k selection is based
+on WSS elbow. Default \code{FALSE}.}
 
-\item{automatic_by_silhouette}{Logical. If `TRUE`, automatic k selection is
-based on average silhouette. Default `FALSE`.}
+\item{automatic_by_silhouette}{Logical. If \code{TRUE}, automatic k selection is
+based on average silhouette. Default \code{FALSE}.}
 
-\item{compute_wss}{Logical. If `TRUE`, computes final WSS. Default `TRUE`.}
+\item{compute_wss}{Logical. If \code{TRUE}, computes final WSS. Default \code{TRUE}.}
 
-\item{compute_silhouette}{Logical. If `TRUE`, computes final average
-silhouette. Default `TRUE`.}
+\item{compute_silhouette}{Logical. If \code{TRUE}, computes final average
+silhouette. Default \code{TRUE}.}
 
-\item{compute_stability}{Logical. If `TRUE`, performs bootstrap-style ARI
-stability analysis. Default `FALSE`.}
+\item{compute_stability}{Logical. If \code{TRUE}, performs bootstrap-style ARI
+stability analysis. Default \code{FALSE}.}
 
-\item{plot_selection}{Logical. If `TRUE`, plots the WSS or silhouette curve
-used to select k. Default `FALSE`.}
+\item{plot_selection}{Logical. If \code{TRUE}, plots the WSS or silhouette curve
+used to select k. Default \code{FALSE}.}
 
 \item{k_grid}{Candidate values of k for automatic selection. Default
-`2:25`.}
+\code{2:25}.}
 
-\item{exclude_noise}{Logical. Mainly relevant for DBSCAN; if `TRUE`,
+\item{exclude_noise}{Logical. Mainly relevant for DBSCAN; if \code{TRUE},
 observations labelled as noise (cluster 0) are excluded from WSS and
-silhouette calculations. Default `TRUE`.}
+silhouette calculations. Default \code{TRUE}.}
 
-\item{B_boot}{Number of bootstrap repetitions. Default `200`.}
+\item{B_boot}{Number of bootstrap repetitions. Default \code{200}.}
 
-\item{nstart}{Number of random starts for k-means. Default `100`.}
+\item{nstart}{Number of random starts for k-means. Default \code{100}.}
 
-\item{seed}{Integer seed for reproducibility. Default `123`.}
+\item{seed}{Integer seed for reproducibility. Default \code{123}.}
 
-\item{minPts}{DBSCAN `minPts` parameter. Default `4`.}
+\item{minPts}{DBSCAN \code{minPts} parameter. Default \code{4}.}
 
-\item{q}{Quantile used to choose DBSCAN `eps` automatically. Default
-`0.95`.}
+\item{q}{Quantile used to choose DBSCAN \code{eps} automatically. Default
+\code{0.95}.}
 
-\item{eps}{Numeric or `NULL`. DBSCAN radius parameter. If a numeric value
-is provided, DBSCAN uses it directly. If `NULL`, `eps` is chosen
-automatically from the `q` quantile of k-nearest-neighbour distances
-with `k = minPts`.}
+\item{eps}{Numeric or \code{NULL}. DBSCAN radius parameter. If a numeric value
+is provided, DBSCAN uses it directly. If \code{NULL}, \code{eps} is chosen
+automatically from the \code{q} quantile of k-nearest-neighbour distances
+with \code{k = minPts}.}
 
-\item{G}{Candidate number of mixture components for mclust. Default `1:10`.}
+\item{G}{Candidate number of mixture components for mclust. Default \code{1:10}.}
 
-\item{standardize}{Logical. If `TRUE`, clustering variables are standardised
-via `scale()` before clustering. Recommended for distance-based methods
-when variables are on different scales. Default `TRUE`.}
+\item{standardize}{Logical. If \code{TRUE}, clustering variables are standardised
+via \code{scale()} before clustering. Recommended for distance-based methods
+when variables are on different scales. Default \code{TRUE}.}
 
-\item{na_action}{Character. How to handle missing values in `cluster_vars`.
-`"stop"` raises an error; `"omit"` removes incomplete rows before
+\item{na_action}{Character. How to handle missing values in \code{cluster_vars}.
+\code{"stop"} raises an error; \code{"omit"} removes incomplete rows before
 clustering.}
 
 \item{cluster_col}{Character. Name of the output column for the cluster
-assignment. Default `"cluster"`.}
+assignment. Default \code{"cluster"}.}
 
-\item{overwrite_cluster_col}{Logical. If `FALSE`, stops when `cluster_col`
-already exists in `DT`. If `TRUE`, the existing column is replaced.
-Default `FALSE`.}
+\item{overwrite_cluster_col}{Logical. If \code{FALSE}, stops when \code{cluster_col}
+already exists in \code{DT}. If \code{TRUE}, the existing column is replaced.
+Default \code{FALSE}.}
 
 \item{bootstrap_reselect_parameters}{Logical. Only used when
-`compute_stability = TRUE`. If `FALSE`, each bootstrap sample uses the
-same parameters as the final model. If `TRUE`, automatic parameters are
-re-selected within each bootstrap sample. Default `FALSE`.}
+\code{compute_stability = TRUE}. If \code{FALSE}, each bootstrap sample uses the
+same parameters as the final model. If \code{TRUE}, automatic parameters are
+re-selected within each bootstrap sample. Default \code{FALSE}.}
 
-\item{verbose}{Logical. If `TRUE`, prints progress messages. Default
-`TRUE`.}
+\item{verbose}{Logical. If \code{TRUE}, prints progress messages. Default
+\code{TRUE}.}
 }
 \value{
 a list with:
-  - data: the original input data.table with an additional clustering
-    column, by default called "cluster".
-  - chosen_k: final selected number of clusters, when relevant.
-  - wss: final WSS result, if requested.
-  - silhouette: final silhouette result, if requested.
-  - stability: bootstrap-style ARI stability result, if requested.
-  - selection_plot: recorded plot object, if plot_selection = TRUE.
+\itemize{
+\item data: the original input data.table with an additional clustering
+column, by default called "cluster".
+\item chosen_k: final selected number of clusters, when relevant.
+\item wss: final WSS result, if requested.
+\item silhouette: final silhouette result, if requested.
+\item stability: bootstrap-style ARI stability result, if requested.
+\item selection_plot: recorded plot object, if plot_selection = TRUE.
+}
 }
 \description{
 This tool clusters observations using one of the following methods:
-- k-means;
-- hierarchical clustering with Ward linkage;
-- hierarchical clustering with complete linkage;
-- hierarchical clustering with average linkage;
-- hierarchical clustering with single linkage;
-- PAM;
-- Gaussian mixture;
-- DBSCAN.
+\itemize{
+\item k-means;
+\item hierarchical clustering with Ward linkage;
+\item hierarchical clustering with complete linkage;
+\item hierarchical clustering with average linkage;
+\item hierarchical clustering with single linkage;
+\item PAM;
+\item Gaussian mixture;
+\item DBSCAN.
 The tool can optionally compute:
-- total within-cluster sum of squares (WSS);
-- average silhouette width;
-- bootstrap-style ARI stability;
-- the WSS or silhouette selection plot used to choose the number of clusters.
+\item total within-cluster sum of squares (WSS);
+\item average silhouette width;
+\item bootstrap-style ARI stability;
+\item the WSS or silhouette selection plot used to choose the number of clusters.
+}
 }
 \examples{
 library(data.table)

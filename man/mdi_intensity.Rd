@@ -10,7 +10,7 @@ mdi_intensity(DT, uniqdim, boollist, contlist, fe)
 \item{DT}{A data.table containing the input data.}
 
 \item{uniqdim}{Character vector of column names that uniquely identify each
-observation (e.g. `c("firmid", "year")`).}
+observation (e.g. \code{c("firmid", "year")}).}
 
 \item{boollist}{Character vector of column names for binary adoption
 indicators (0/1). A probit propensity is estimated for each.}
@@ -19,11 +19,11 @@ indicators (0/1). A probit propensity is estimated for each.}
 predictors used in each probit model.}
 
 \item{fe}{Character vector of column names to include as factor fixed
-effects in each probit model (e.g. `c("nace2", "year")`).}
+effects in each probit model (e.g. \code{c("nace2", "year")}).}
 }
 \value{
-A data.table keyed on `uniqdim` with one additional column
-  `intens_probit`: the geometric mean of all predicted propensities.
+A data.table keyed on \code{uniqdim} with one additional column
+\code{intens_probit}: the geometric mean of all predicted propensities.
 }
 \description{
 Reduces a set of binary adoption indicators to a single continuous intensity

@@ -57,14 +57,16 @@ parameters (\code{g_b_slopes}, \code{g_b_intercept}). Default \code{TRUE}.}
 }
 \value{
 A \code{data.table} with one row per observation in the GMM sample,
-  containing:
-- \code{id}, \code{time} columns (using the names supplied)
-- \code{tfp}: total factor productivity
-- \code{el_<input>}: estimated input elasticities
-- \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE}): period-demeaned TFP
-- \code{g_b_slopes}, \code{g_b_intercept} (if \code{Omega_estimates = TRUE})
-- \code{NumObs}: number of observations used in the GMM stage
-- \code{convergence}: optimiser convergence code (0 = converged)
+containing:
+\itemize{
+\item \code{id}, \code{time} columns (using the names supplied)
+\item \code{tfp}: total factor productivity
+\item \code{el_<input>}: estimated input elasticities
+\item \code{TFP_demeaned} (if \code{TFP_demeaned = TRUE}): period-demeaned TFP
+\item \code{g_b_slopes}, \code{g_b_intercept} (if \code{Omega_estimates = TRUE})
+\item \code{NumObs}: number of observations used in the GMM stage
+\item \code{convergence}: optimiser convergence code (0 = converged)
+}
 }
 \description{
 Two-stage proxy-variable estimator using an intermediate input (typically

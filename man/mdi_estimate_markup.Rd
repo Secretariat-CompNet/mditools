@@ -7,19 +7,19 @@
 mdi_estimate_markup(DT, oe = "oe_l", rev_col = "nq", input_cost = "nm")
 }
 \arguments{
-\item{DT}{A `data.table` containing panel data.}
+\item{DT}{A \code{data.table} containing panel data.}
 
 \item{oe}{Character scalar. Name of the output elasticity column.
-Default `"oe_l"`.}
+Default \code{"oe_l"}.}
 
 \item{rev_col}{Character scalar. Name of the total revenue column.
-Default `"nq"`.}
+Default \code{"nq"}.}
 
 \item{input_cost}{Character scalar. Name of the input cost column.
-Default `"nm"`.}
+Default \code{"nm"}.}
 }
 \value{
-A `data.table` with a single column `markup`.
+A \code{data.table} with a single column \code{markup}.
 }
 \description{
 Estimates firm-level markup following De Loecker (2012): markup is the

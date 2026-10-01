@@ -17,66 +17,72 @@ mdi_disclose_crit(
 )
 }
 \arguments{
-\item{DT}{A `data.table` containing the aggregated dataset.}
+\item{DT}{A \code{data.table} containing the aggregated dataset.}
 
 \item{domVar}{Character. Variable used for the dominance criterion.
-Use `"var"` (default) to compute dominance for all variables in
-`var_list`, or supply the name of a single numeric column already
-present in `DT` (e.g. `"emp"`, `"nq"`).}
+Use \code{"var"} (default) to compute dominance for all variables in
+\code{var_list}, or supply the name of a single numeric column already
+present in \code{DT} (e.g. \code{"emp"}, \code{"nq"}).}
 
 \item{domNr}{Numeric. Number of top firms to consider in the dominance
-criterion (e.g. top 1, 2, or 3). Default `2`.}
+criterion (e.g. top 1, 2, or 3). Default \code{2}.}
 
 \item{bygroups}{Character vector of grouping variables, as in
-[`mdi_aggregate()`].}
+\code{\link[=mdi_aggregate]{mdi_aggregate()}}.}
 
 \item{var_list}{Character vector of variables to include when
-`domVar = "var"`. Usually the same as in [`mdi_aggregate()`].
-Default `NULL`.}
+\code{domVar = "var"}. Usually the same as in \code{\link[=mdi_aggregate]{mdi_aggregate()}}.
+Default \code{NULL}.}
 
 \item{dom_formula}{Character. Formula used to compute the dominance share.
-`"top_share"` (default) computes the share of the top `domNr` firms in
-the group total. `"residual"` computes \eqn{(Total - x_1 - x_2) / x_1}.
-Only applies when `domVar = "var"`.}
+\code{"top_share"} (default) computes the share of the top \code{domNr} firms in
+the group total. \code{"residual"} computes \eqn{(Total - x_1 - x_2) / x_1}.
+Only applies when \code{domVar = "var"}.}
 
-\item{count_firms}{Logical. If `TRUE`, the number of unique firms and
-enterprises per group are computed and added to the output as `NumFirms`
-and `NumEnt`, using `firm_col` and `ent_col`. Default `FALSE`.}
+\item{count_firms}{Logical. If \code{TRUE}, the number of unique firms and
+enterprises per group are computed and added to the output as \code{NumFirms}
+and \code{NumEnt}, using \code{firm_col} and \code{ent_col}. Default \code{FALSE}.}
 
 \item{firm_col}{Character. Column name used to count unique firms when
-`count_firms = TRUE`. Default `"firmid"`.}
+\code{count_firms = TRUE}. Default \code{"firmid"}.}
 
 \item{ent_col}{Character. Column name used to count unique enterprises when
-`count_firms = TRUE`. Default `"entid"`.}
+\code{count_firms = TRUE}. Default \code{"entid"}.}
 }
 \value{
-A `data.table` with the same grouping structure as the input, plus:
-  - One or more `domPerc_*` columns: dominance share per group.
-  - A column `NumObs`: number of non-missing observations per group.
-  - `NumFirms` and `NumEnt` (only when `count_firms = TRUE`).
+A \code{data.table} with the same grouping structure as the input, plus:
+\itemize{
+\item One or more \verb{domPerc_*} columns: dominance share per group.
+\item A column \code{NumObs}: number of non-missing observations per group.
+\item \code{NumFirms} and \code{NumEnt} (only when \code{count_firms = TRUE}).
+}
 }
 \description{
 Computes and attaches disclosure-control variables to an aggregated dataset.
 The function calculates a dominance measure and the number of non-missing
 observations per group.
 
-Two dominance formulas are available via `dom_formula`:
-- `"top_share"` (default): share of the top `domNr` firms in the group total.
-- `"residual"`: \eqn{(Total - x_1 - x_2) / x_1}, where \eqn{x_1} and
-  \eqn{x_2} are the two largest values. Used when the dominance criterion
-  is defined as the residual relative to the largest firm.
+Two dominance formulas are available via \code{dom_formula}:
+\itemize{
+\item \code{"top_share"} (default): share of the top \code{domNr} firms in the group total.
+\item \code{"residual"}: \eqn{(Total - x_1 - x_2) / x_1}, where \eqn{x_1} and
+\eqn{x_2} are the two largest values. Used when the dominance criterion
+is defined as the residual relative to the largest firm.
+}
 
-This function is normally called internally by [`mdi_aggregate()`] when
-`disclosure = TRUE`, but can also be used standalone.
+This function is normally called internally by \code{\link[=mdi_aggregate]{mdi_aggregate()}} when
+\code{disclosure = TRUE}, but can also be used standalone.
 }
 \details{
-- For `domVar != "var"`, the named column must already be present in `DT`.
-  One dominance column (`domPerc`) is returned and `dom_formula` is ignored.
-- For `domVar = "var"`, separate dominance columns are created for each
-  variable in `var_list` (`domPerc_<var>`), using the formula specified
-  by `dom_formula`.
-- When `count_firms = TRUE`, `firm_col` and `ent_col` must be present in
-  `DT`; the function stops with an error if either is missing.
+\itemize{
+\item For \code{domVar != "var"}, the named column must already be present in \code{DT}.
+One dominance column (\code{domPerc}) is returned and \code{dom_formula} is ignored.
+\item For \code{domVar = "var"}, separate dominance columns are created for each
+variable in \code{var_list} (\verb{domPerc_<var>}), using the formula specified
+by \code{dom_formula}.
+\item When \code{count_firms = TRUE}, \code{firm_col} and \code{ent_col} must be present in
+\code{DT}; the function stops with an error if either is missing.
+}
 }
 \examples{
 library(data.table)

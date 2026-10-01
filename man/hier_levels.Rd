@@ -7,19 +7,19 @@
 hier_levels(hhfile)
 }
 \arguments{
-\item{hhfile}{A hierarchy `data.table` whose columns are named `h_0`,
-`h_1`, ... .}
+\item{hhfile}{A hierarchy \code{data.table} whose columns are named \code{h_0},
+\code{h_1}, ... .}
 }
 \value{
 A character vector of column names, finest level first.
 }
 \description{
-Hierarchy tables name their columns `h_0`, `h_1`, ... — the number is the
-level index, finest first. `hier_levels()` returns those columns in level
+Hierarchy tables name their columns \code{h_0}, \code{h_1}, ... — the number is the
+level index, finest first. \code{hier_levels()} returns those columns in level
 order, read from the index in each name rather than from column position
 or alphabetical sorting. Both have been wrong before: column order breaks
-silently if a file is ever re-saved with its columns moved, and `sort()`
-puts `h_10` before `h_2`.
+silently if a file is ever re-saved with its columns moved, and \code{sort()}
+puts \code{h_10} before \code{h_2}.
 }
 \examples{
 hhfile <- data.table::data.table(h_0 = character(), h_2 = character(),
