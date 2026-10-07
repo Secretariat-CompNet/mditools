@@ -125,3 +125,22 @@ test_that("n_nonmiss mrg=TRUE adds column to original DT", {
   expect_equal(nrow(result), nrow(DT))
   expect_true("n_nonmiss_emp" %in% names(result))
 })
+
+test_that("mdi_aggregate leaves its input unmodified, with and without mrg", {
+  DT <- data.table::data.table(firmid = 1:6, years = rep(1:2, 3), v = c(1, 2, NA, 4, 0, 6),
+                               txt = c("", "a", "b", "", "c", "d"))
+  before <- data.table::copy(DT)
+  r <- mdi_aggregate(DT, c("v", "txt"), "years", c("mean", "nmiss", "nempty", "nzero"))
+  expect_identical(DT, before)
+  expect_equal(r$mean_v, c(0.5, 4))
+  expect_equal(r$nempty_txt, c(1L, 1L))
+  m <- mdi_aggregate(DT, c("v", "txt"), "years", c("sum", "nempty"), mrg = TRUE)
+  expect_identical(DT, before)
+  expect_true(all(c("sum_v", "nempty_txt") %in% names(m)))
+})
+
+test_that("mdi_aggregate's nempty needs a character variable, and names a missing one", {
+  DT <- data.table::data.table(years = 1:2, v = c(1, 2))
+  expect_error(mdi_aggregate(DT, "v", "years", "nempty"), "nempty can only be applied to character")
+  expect_error(mdi_aggregate(DT, c("v", "nope"), "years", "nempty"), "nope")
+})

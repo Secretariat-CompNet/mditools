@@ -103,17 +103,12 @@ mdi_aggregate <-
     if (length(bad_types) > 0)
       stop(paste0("unknown agg_type: ", paste(bad_types, collapse = ", ")))
 
-    DTout <- data.table::copy(DT)
+    # only mrg = TRUE adds columns to the table it returns; the summary path
+    # only reads it, and a copy would double the peak memory on a large table
+    DTout <- if (mrg) data.table::copy(DT) else DT
 
     var_list <- eval(substitute(var_list), parent.frame())
     check_char_vec(var_list, "var_list")
-
-    # Error message for nempty
-    if ("nempty" %in% agg_type &&
-        length(var_list[vapply(DTout[, var_list, with = FALSE], is.character,
-                               FUN.VALUE = logical(1))]) == 0) {
-      stop("nempty can only be applied to character variables")
-    }
 
     # Flag if users use variables in var_list that aren't present in DTout
     if (any(!var_list %in% names(DTout))) {
@@ -135,6 +130,13 @@ mdi_aggregate <-
                bygroups[!bygroups %in% names(DTout)]),
         ' in "bygroups" cannot be found in DTout'
       ))
+    }
+
+    # Error message for nempty. Each column's type is read in place:
+    # DTout[, var_list, with = FALSE] would copy all of them
+    if ("nempty" %in% agg_type &&
+        !any(vapply(var_list, function(v) is.character(DTout[[v]]), FUN.VALUE = logical(1)))) {
+      stop("nempty can only be applied to character variables")
     }
 
     # Flag if users want to compute the number of firms but there's no firm identifier in DT
@@ -311,11 +313,11 @@ mdi_aggregate <-
     if (mrg == TRUE) {
       for (y in agg_type) {
         # numerical vars in varlist
-        numerics <- var_list[var_list %in% colnames(DTout)[colnames(DTout) %in% colnames(DTout[, which(vapply(DTout, is.numeric, FUN.VALUE = logical(1))), with = FALSE])]]
+        numerics <- var_list[var_list %in% names(DTout)[vapply(DTout, is.numeric, FUN.VALUE = logical(1))]]
         ansvar_list_num <- paste(y, numerics, sep = "_")
 
         # character vars in varlist
-        nonnumerics <- var_list[var_list %in% colnames(DTout)[colnames(DTout) %in% colnames(DTout[, which(vapply(DTout, is.character, FUN.VALUE = logical(1))), with = FALSE])]]
+        nonnumerics <- var_list[var_list %in% names(DTout)[vapply(DTout, is.character, FUN.VALUE = logical(1))]]
         ansvar_list_nonnum <- paste(y, nonnumerics, sep = "_")
 
         # all vars in varlist
