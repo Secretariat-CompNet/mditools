@@ -1,55 +1,33 @@
-## Resubmission
+## Update
 
-This is a resubmission addressing the three issues raised by the CRAN reviewer:
-
-1. **`\dontrun` in examples replaced**: `mdi_import_data()` and `mdi_regress()`
-   now use runnable examples with `tempdir()` instead of fake paths wrapped in
-   `\dontrun{}`.
-
-2. **No file writing to user home**: `mdi_regress()` example now writes to
-   `paste0(tempdir(), "/")` instead of a hard-coded output path.
-
-3. **`mdi_disclose_crit()` refactored**: The function no longer reads from a
-   hard-coded RDS file on disk (`dirTMPSAVE`/`NSI_MD_conc` parameters removed).
-   The dominance variable must now be passed directly as a column in `DT`, which
-   is more general and does not assume any file system layout.
-
----
-
-## Package summary
-
-`mditools` supports the full analysis pipeline for researchers working with
-firm-level microdata. It includes data tools for panel preparation (import,
-outlier detection, classification harmonization), analytical methods (production
-function estimation via ACF, LP, OLS, WDRG, CS, and DPGMM; capital stock
-measurement via PIM; markups, intensity measures, distributions, regression,
-and clustering), and disclosure tools for tagging aggregated outputs with
-dominance and observation counts before publication.
-
-## Check environments
-
-- macOS Sequoia 15.7 (x86_64), R 4.6.0 — 0 errors | 0 warnings | 0 notes
-- Windows (R-devel, 2026-06-15 r90156), via `devtools::check_win_devel()` — 0 errors | 0 warnings | 1 note
-- Windows (R-release 4.5.3), via `devtools::check_win_release()` — 0 errors | 0 warnings | 1 note
-- Windows (R-oldrel 4.5.3), via `devtools::check_win_oldrelease()` — 0 errors | 0 warnings | 1 note
+This is an update from 0.1.0 to 0.1.1: bug fixes (lower memory use in
+`mdi_aggregate()`, hierarchy level ordering in `mdi_hier_apply()`, confidence
+intervals in `mdi_regress()`, a rewrite of `mdi_make_conc()` that removes a
+join failure on large concordances), Oracle import in `mdi_import_data()`
+(suggested packages only), and a few exported helpers for packages that
+build on mditools. See NEWS.md.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+<!-- fill in from the final runs -->
+0 errors | 0 warnings | 0 notes
 
-## Notes
+## Check environments
 
-**"Possibly misspelled words: Microdata, microdata"** — these are intentional domain
-terms (microdata = firm-level record data), not spelling errors.
+<!-- fill in -->
+- macOS (x86_64), R 4.6.0
+- Windows (R-devel), via `devtools::check_win_devel()`
+- Windows (R-release), via `devtools::check_win_release()`
+- GitHub Actions: ubuntu-latest, windows-latest, macos-latest (R release)
 
 ## Notes on suggested packages
 
-- `arrow` is listed in `Suggests` and is only used in `mdi_import_data()` behind
-  a `requireNamespace("arrow", quietly = TRUE)` guard. Tests for the parquet
-  format use `skip_if_not_installed("arrow")` and are skipped when `arrow` is
-  not available.
+- `arrow` is only used in `mdi_import_data()` behind
+  `requireNamespace("arrow", quietly = TRUE)`; the parquet tests use
+  `skip_if_not_installed("arrow")`.
+- `RODBC` and `askpass` are only used in `mdi_import_data()` with
+  `format = "oracle"`, behind `requireNamespace()`; no test needs a database.
 
 ## Reverse dependencies
 
-This is the first CRAN submission of this package. There are no reverse
-dependencies.
+There are no reverse dependencies on CRAN.
