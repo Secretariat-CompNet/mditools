@@ -33,6 +33,9 @@
 
 * Help pages use Markdown; `panel_lag()` and `panel_lag_L()` are
   documented.
+* Acknowledgements and the EU funding statement (Technical Support
+  Instrument, project ProdTool) in the README and on the package help page;
+  the European Union is listed as funder.
 
 # mditools 0.1.0
 

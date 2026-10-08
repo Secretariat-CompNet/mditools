@@ -17,7 +17,9 @@ Authors@R: c(
     person("Javier", "Miranda", role = "ctb"),
     person("Marcelo Piemonte", "Ribeiro", role = "ctb"),
     person("Reetuparna", "Vishwanath", role = "ctb"),
-    person("Chengzi", "Yi", role = "ctb")
+    person("Chengzi", "Yi", role = "ctb"),
+    person("European Union", role = "fnd",
+           comment = "Technical Support Instrument (TSI), project ProdTool, TSI-2025-MULTIMSPROD-IBA, TSI Project Number 101261159")
   )
 Description: Supports the full analysis pipeline for researchers working with
     firm-level microdata. Provides data tools for panel preparation (import,

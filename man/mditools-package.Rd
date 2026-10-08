@@ -8,6 +8,13 @@
 \description{
 Supports the full analysis pipeline for researchers working with firm-level microdata. Provides data tools for panel preparation (import, outlier detection, classification harmonization), analytical methods (production function estimation, capital stock measurement, markups, intensity measures, distributions, regression, clustering), and disclosure tools for tagging outputs with dominance and observation counts before aggregation and publication. Production function estimation implements methods by Ackerberg, Caves and Frazer (2015) \doi{10.3982/ECTA13408}, Levinsohn and Petrin (2003) \doi{10.1111/1467-937X.00246}, Wooldridge (2009) \doi{10.1016/j.econlet.2009.04.026}, Petrin, Poi and Levinsohn (2004) \doi{10.1177/1536867X0400400202}, and Arellano and Bond (1991) \doi{10.2307/2297968} with the "too many instruments" correction by Roodman (2009) \doi{10.1111/j.1468-0084.2008.00542.x}. Markup estimation follows De Loecker and Warzynski (2012) \doi{10.1257/aer.102.6.2437}. Cost-share production function estimation follows Basu and Fernald (1997) \doi{10.1086/262073}. Capital stock estimation via the Perpetual Inventory Method follows OECD (2009) \doi{10.1787/9789264068476-en}.
 }
+\section{Acknowledgements}{
+
+We thank Jorge de la Cal Medina, Ashim Dubey, Dominik Frommeyer (Statistisches Bundesamt, Destatis), Adam Haunch, Rachel Kühn (Statistisches Bundesamt, Destatis) and Elena Sponga.
+
+Funded by the European Union under the Technical Support Instrument (TSI). This package was developed as part of the project ProdTool (TSI-2025-MULTIMSPROD-IBA, TSI Project Number: 101261159). Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Commission. Neither the European Union nor the granting authority can be held responsible for them.
+}
+
 \seealso{
 Useful links:
 \itemize{
@@ -37,6 +44,7 @@ Other contributors:
   \item Marcelo Piemonte Ribeiro [contributor]
   \item Reetuparna Vishwanath [contributor]
   \item Chengzi Yi [contributor]
+  \item European Union (Technical Support Instrument (TSI), project ProdTool, TSI-2025-MULTIMSPROD-IBA, TSI Project Number 101261159) [funder]
 }
 
 }
