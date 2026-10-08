@@ -51,6 +51,6 @@ conc <- data.table(
   left  = c("A",   "B",   "A",   "C"),
   right = c("A",   "B",   "A2",  "C")
 )
-mdi_make_conc(conc, 2011:2012, "pcc")
+mdi_make_conc(conc, 2011:2012, "pcc8")
 
 }
