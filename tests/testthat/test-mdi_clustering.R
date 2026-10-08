@@ -140,3 +140,38 @@ test_that("na_action = 'omit' clusters remaining rows", {
   expect_equal(nrow(result$data), 40L)
   expect_true(is.na(result$data[firmid == 1, cluster]))
 })
+make_two_groups <- function() {
+  set.seed(1)
+  data.table::data.table(firmid = 1:60,
+                         x1 = c(rnorm(30, 0, 0.5), rnorm(30, 5, 0.5)),
+                         x2 = c(rnorm(30, 0, 0.5), rnorm(30, 5, 0.5)))
+}
+
+test_that("pam and mclust run and find the two groups", {
+  DT <- make_two_groups()
+  for (m in c("pam", "mclust")) {
+    args <- list(DT = data.table::copy(DT), id_vars = "firmid", cluster_vars = c("x1", "x2"), method = m,
+                 k_selection = "automatic", k_grid = 2:4, G = 1:3, verbose = FALSE)
+    if (m == "pam") { args$automatic_by_wss <- FALSE; args$automatic_by_silhouette <- TRUE }
+    res <- suppressWarnings(suppressMessages(do.call(mdi_clustering, args)))
+    cl <- res$data$cluster
+    expect_equal(data.table::uniqueN(cl), 2, label = m)
+    expect_equal(data.table::uniqueN(cl[1:30]), 1, label = m)
+  }
+})
+
+test_that("mdi_clustering leaves the caller's random numbers as they were", {
+  DT <- make_two_groups()
+  set.seed(42)
+  expected <- runif(3)
+  set.seed(42)
+  suppressMessages(mdi_clustering(data.table::copy(DT), id_vars = "firmid", cluster_vars = c("x1", "x2"),
+                                  method = "kmeans", k_selection = "fixed", k_fixed = 2, verbose = FALSE))
+  expect_equal(runif(3), expected)
+
+  # no random state before the call: none after it either
+  rm(".Random.seed", envir = globalenv())
+  suppressMessages(mdi_clustering(data.table::copy(DT), id_vars = "firmid", cluster_vars = c("x1", "x2"),
+                                  method = "kmeans", k_selection = "fixed", k_fixed = 2, verbose = FALSE))
+  expect_false(exists(".Random.seed", envir = globalenv(), inherits = FALSE))
+})

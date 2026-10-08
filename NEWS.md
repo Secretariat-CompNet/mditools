@@ -8,6 +8,13 @@
   times the table's size.
 * `mdi_hier_apply()` orders hierarchy levels by their number, so `h_10`
   comes after `h_2` (they were ordered alphabetically).
+* `mdi_clustering()` with `method = "pam"` works again: it stopped with
+  "length(labels) must equal nrow(Xmat)" whenever it was used.
+* `mdi_clustering()` with `method = "mclust"` works without mclust being
+  attached (it stopped with "could not find function mclustBIC").
+* `mdi_clustering()` no longer changes the caller's random numbers: the
+  seed it sets for reproducible clusters is undone when it returns.
+  Clustering results are unchanged.
 * `mdi_regress()` computes confidence intervals with the requested
   covariance estimator (`vcov`), matching the standard errors.
 * `mdi_make_conc()` is rewritten: codes linked across years form one

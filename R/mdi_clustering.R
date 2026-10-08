@@ -136,6 +136,18 @@ mdi_clustering <- function(
     bootstrap_reselect_parameters = FALSE,
     verbose = TRUE
 ) {
+
+  # set.seed() below makes the clustering reproducible; the caller's own
+  # random numbers are restored on exit, as if it had never been called
+  had_seed <- exists(".Random.seed", envir = globalenv(), inherits = FALSE)
+  if (had_seed) old_seed <- get(".Random.seed", envir = globalenv(), inherits = FALSE)
+  on.exit({
+    if (had_seed) {
+      assign(".Random.seed", old_seed, envir = globalenv())
+    } else if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+      rm(".Random.seed", envir = globalenv())
+    }
+  }, add = TRUE)
   
   ###########################################################################
   # 1. Methodology setting
@@ -498,7 +510,7 @@ mdi_clustering <- function(
       if (method == "pam") {
         sil_values <- vapply(kg, function(k) {
           pam_fit <- cluster::pam(Xmat, k = k)
-          calc_avg_silhouette(pam_fit$mdi_clustering, Xmat)
+          calc_avg_silhouette(pam_fit$clustering, Xmat)
         }, FUN.VALUE = numeric(1))
         
         best_k <- kg[which.max(sil_values)]
@@ -573,7 +585,7 @@ mdi_clustering <- function(
       if (method == "pam") {
         wss_values <- vapply(kg, function(k) {
           pam_fit <- cluster::pam(Xmat, k = k)
-          calc_total_wss(pam_fit$mdi_clustering, Xmat)
+          calc_total_wss(pam_fit$clustering, Xmat)
         }, FUN.VALUE = numeric(1))
         
         elbow <- choose_k_by_elbow(wss_values, kg)
@@ -634,7 +646,7 @@ mdi_clustering <- function(
       pam_fit <- cluster::pam(Xmat, k = k)
       
       return(list(
-        labels = as.integer(pam_fit$mdi_clustering),
+        labels = as.integer(pam_fit$clustering),
         fit = pam_fit,
         chosen_G = NA_integer_,
         chosen_eps = NA_real_

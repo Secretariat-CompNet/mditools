@@ -27,6 +27,7 @@ export(mdi_regress)
 export(mdi_transition)
 export(mdi_wdrg_prodest)
 import(data.table)
+importFrom(mclust,mclustBIC)
 importFrom(stats,
   as.formula,
   binomial,
